@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">WashForMe</string>
+    <string name="title_activity_login">loginActivity</string>
+    <string name="title_activity_sign_up">SignUpActivity</string>
 </resources>
