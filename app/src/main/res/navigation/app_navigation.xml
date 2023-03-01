@@ -4,36 +4,5 @@
     android:id="@+id/app_navigation"
     app:startDestination="@+id/signUpFragment">
 
-    <fragment
-        android:id="@+id/loginFragment"
-        android:name="com.example.washforme.ui.logIn.LoginFragment"
-        android:label="LoginFragment">
 
-        <action
-        android:id="@+id/action_loginFragment_to_signupfragment"
-        app:destination="@id/signUpFragment" />
-
-    </fragment>
-
-    <fragment
-        android:id="@+id/signUpFragment"
-        android:name="com.example.washforme.ui.signUp.SignUpFragment"
-        android:label="SingupFragment">
-
-        <action
-            android:id="@+id/action_signupFragment_to_loginfragment"
-            app:destination="@id/loginFragment" />
-
-        <action
-            android:id="@+id/action_signupFragment_to_otpfragment"
-            app:destination="@id/OtpFragment" />
-
-    </fragment>
-
-    <fragment
-        android:id="@+id/OtpFragment"
-        android:name="com.example.washforme.ui.otpVerification.OtpVerificationFragment"
-        android:label="otpFragment">
-
-    </fragment>
 </navigation>
