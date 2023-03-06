@@ -1,21 +1,28 @@
 package com.example.washforme.view
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.washforme.R
 import com.example.washforme.databinding.FragmentLoginBinding
+import com.example.washforme.db.Api
+import com.example.washforme.utils.Constants
+import com.example.washforme.utils.MyPreferenceManager
 import com.example.washforme.viewModel.LoginViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import dagger.hilt.android.EntryPointAccessors
+import javax.inject.Inject
 
 
 @AndroidEntryPoint
 class LoginFragment : Fragment() {
+
+    @Inject lateinit var myPreferenceManager: MyPreferenceManager
 
     var binding: FragmentLoginBinding? = null
 
@@ -31,22 +38,19 @@ class LoginFragment : Fragment() {
             lifecycleOwner = viewLifecycleOwner
             model = loginViewModel
         }
-
-
-
-
         return binding?.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        loginViewModel.toast.observe(viewLifecycleOwner) {
-            if (it?.isNotEmpty() == true) {
-                Toast.makeText(requireContext(), it, Toast.LENGTH_SHORT).show()
-                loginViewModel.toast.value = null
+        if (!myPreferenceManager.getString(Constants.TOKEN).isNullOrEmpty()) {
+            this.findNavController().navigate(R.id.loginToDashboardFragment)
+        } else {
+            loginViewModel.toast.observe(viewLifecycleOwner) {
+                loginViewModel.writeToast(requireContext(), it)
             }
         }
+
     }
 
     override fun onDestroyView() {

@@ -26,23 +26,14 @@ class OtpFragment : Fragment() {
        binding = FragmentOtpBinding.inflate(inflater, container, false).apply {
             lifecycleOwner = viewLifecycleOwner
             model = loginViewModel
-
-
-            loginViewModel.validateOtpResponse.observe(viewLifecycleOwner) {
-                if(it.status)
-                    findNavController().navigate(R.id.otpFragmentToMainActivity)
-            }
-            return binding?.root
         }
+        return binding?.root
     }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         loginViewModel.toast.observe(viewLifecycleOwner) {
-            if (it?.isNotEmpty() == true) {
-                Toast.makeText(requireContext(), it, Toast.LENGTH_SHORT).show()
-                loginViewModel.toast.value = null
-            }
+            loginViewModel.writeToast(requireContext(), it)
         }
     }
 }
