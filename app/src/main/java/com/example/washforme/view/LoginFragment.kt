@@ -1,6 +1,5 @@
 package com.example.washforme.view
 
-import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -10,14 +9,11 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.washforme.R
 import com.example.washforme.databinding.FragmentLoginBinding
-import com.example.washforme.db.Api
 import com.example.washforme.utils.Constants
 import com.example.washforme.utils.MyPreferenceManager
 import com.example.washforme.viewModel.LoginViewModel
 import dagger.hilt.android.AndroidEntryPoint
-import dagger.hilt.android.EntryPointAccessors
 import javax.inject.Inject
-
 
 @AndroidEntryPoint
 class LoginFragment : Fragment() {
@@ -26,9 +22,7 @@ class LoginFragment : Fragment() {
 
     var binding: FragmentLoginBinding? = null
 
-
     private val loginViewModel: LoginViewModel by viewModels()
-
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -50,7 +44,6 @@ class LoginFragment : Fragment() {
                 loginViewModel.writeToast(requireContext(), it)
             }
         }
-
     }
 
     override fun onDestroyView() {

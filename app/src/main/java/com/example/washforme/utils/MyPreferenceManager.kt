@@ -33,6 +33,8 @@ class MyPreferenceManager @Inject constructor(private val sharedPref : SharedPre
 
     fun getBoolean(key: String) = sharedPref.getBoolean(key, false)
 
+    fun removeItem (key : String) = editor.remove(key).apply()
+
     fun clear() {
         editor.clear()
             .apply()

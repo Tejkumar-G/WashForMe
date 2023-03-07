@@ -1,6 +1,6 @@
 package com.example.washforme.db
 
-data class ResponseData<out T>(val status: Status, val data: T?, val message: String?) {
+data class ResponseData<out T>(val status: Status, val payload: T?, val message: String?) {
     companion object {
         fun <T> success(data: T?): ResponseData<T> {
             return ResponseData(Status.SUCCESS, data, null)

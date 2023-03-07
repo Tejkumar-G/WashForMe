@@ -24,8 +24,7 @@ interface Api {
 
     @POST("/logout/")
     suspend fun logoutUser(
-        @Body
-        user: User
+        @Header("Authorization") token: String
     ): Response<ResponseBody>
 
     @GET("/user_details/")
@@ -36,33 +35,33 @@ interface Api {
     @GET("/wash_categories/")
     suspend fun getWashCategory(
         @Header("Authorization") token: String
-    ) : Array<Categories>
+    ) : Response<Array<Categories>>
 
     @GET("/wash_items/")
     suspend fun getWashingItems(
         @Header("Authorization") token: String
-    ) : List<WashingItems>
+    ) : Response<List<WashingItems>>
 
     @POST("/create_user_wash_relations/")
     suspend fun createUserWashRelation(
         @Body
         Item : WashCategoryItemRelations
-    ) : CreateWashCategoryItemRelationsResponse
+    ) : Response<CreateWashCategoryItemRelationsResponse>
 
     @GET("/wash_category_item_relations/")
     suspend fun getWashCategoryItemRelations(
         @Header("Authorization") token: String
-    ) : WashCategoryItemRelationsResponse
+    ) : Response<WashCategoryItemRelationsResponse>
 
     @GET("/user_wash_relations/")
     suspend fun getUserWashRelation(
         @Header("Authorization") token: String
-    ) : UserWashRelation
+    ) : Response<UserWashRelation>
 
     @GET("/get_time_slots/")
     suspend fun getTimeSlots(
         @Header("Authorization") token: String
-    ) : GetTimeSlotResponse
+    ) : Response<GetTimeSlotResponse>
 
     @POST("/book_slot/")
     suspend fun slotBooking(
@@ -70,6 +69,5 @@ interface Api {
         @Body
         userWashRelationId : Int,
         slot : Int
-    ) : SlotBookingResponse
-
+    ) : Response<SlotBookingResponse>
 }

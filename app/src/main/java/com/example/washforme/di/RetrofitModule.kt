@@ -8,7 +8,6 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
-import okhttp3.ConnectionSpec
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -34,16 +33,9 @@ object RetrofitModule {
     @Provides
     fun okHttpClientProvider(preferenceManager: MyPreferenceManager): OkHttpClient =
         OkHttpClient.Builder()
-            .connectTimeout(2, TimeUnit.MINUTES) // connect timeout
-            .writeTimeout(2, TimeUnit.MINUTES) // write timeout
-            .readTimeout(2, TimeUnit.MINUTES) // read timeout
-//            .addInterceptor { chain ->
-//                chain.proceed(
-//                    chain.request().newBuilder().addHeader(
-//                        "Authorization", "Token ${preferenceManager.getString(Constants.TOKEN)}"
-//                    ).build()
-//                )
-//            }
+            .connectTimeout(2, TimeUnit.MINUTES)
+            .writeTimeout(2, TimeUnit.MINUTES)
+            .readTimeout(2, TimeUnit.MINUTES)
             .addInterceptor(HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY))
             .retryOnConnectionFailure(true)
             .build()
@@ -57,7 +49,5 @@ object RetrofitModule {
     @Singleton
     @Provides
     fun repoProvider(api: Api, preferenceManager: MyPreferenceManager) = Repository(api, preferenceManager)
-
-
 }
 

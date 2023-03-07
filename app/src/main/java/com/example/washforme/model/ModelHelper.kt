@@ -15,18 +15,16 @@ class ModelHelper{
     var email : String?= null
 }
 
-
-
-data class Categories (
-    var id : Int,
-    var name : String,
-    var Image : String
+data class Categories(
+    var id : Int?,
+    var name : String?,
+    var Image : String?
 )
 
-data class WashingItems (
+data class WashingItems(
     var id : Int,
     var name : String,
-    var Image : String
+    var Image : String?
 )
 
 @Serializable
@@ -42,7 +40,6 @@ class WashCategoryRelationList {
     @SerialName("item_ids")
     var itemIds: List<Int?>? = null
 }
-
 
 data class CreateWashCategoryItemRelationsResponse (
     var id: Int?,

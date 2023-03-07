@@ -9,8 +9,8 @@ import androidx.navigation.findNavController
 import com.example.washforme.R
 import com.example.washforme.db.Repository
 import com.example.washforme.db.Status
-import com.example.washforme.model.ValidateOtpResponse
 import com.example.washforme.utils.Constants
+import com.example.washforme.utils.MyPreferenceManager
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -18,15 +18,13 @@ import javax.inject.Inject
 
 @HiltViewModel
 class LoginViewModel @Inject constructor(
-    private val repo: Repository
+    private val repo: Repository,
+    private val pref: MyPreferenceManager
 ) : ViewModel() {
-
-
 
     val phone = MutableLiveData<String>()
     val phoneNumber = MutableLiveData(Constants.COUNTRY_CODE)
     val otp = MutableLiveData<String>()
-
     val toast = MutableLiveData<String?>()
     val isLoading = MutableLiveData(false)
 
@@ -42,6 +40,7 @@ class LoginViewModel @Inject constructor(
             viewModelScope.launch(Dispatchers.Main) {
                 view.findViewTreeLifecycleOwner()?.let {
                     phoneNumber.value = phoneNumber.value + phone.value
+                    pref.set("Phone", phoneNumber.value.toString())
                     repo.validatePhone(phoneNumber.value!!)
                         .observe(it) { response ->
                             when (response.status) {
@@ -51,7 +50,8 @@ class LoginViewModel @Inject constructor(
                                 }
                                 Status.FAILURE -> {
                                     isLoading.postValue(false)
-
+                                    phoneNumber.value = ""
+                                    pref.removeItem("Phone")
                                     toast.value = response.message.toString()
                                 }
                                 Status.LOADING -> {
@@ -64,30 +64,31 @@ class LoginViewModel @Inject constructor(
         }
     }
 
-        fun verifyOTP(view: View) {
-            Log.d("verifyOTP", "verifyOTP: work")
-            if (otp.value != "") {
-                viewModelScope.launch {
-                    view.findViewTreeLifecycleOwner()?.let {
-                        repo.validateOTP("+918886568119", otp.value.toString())
-                            .observe(it) { response ->
-                                when (response.status) {
-                                    Status.SUCCESS -> {
-                                        isLoading.postValue(false)
-                                        view.findNavController().navigate(R.id.otpFragmentToDashboardFragment)
-                                    }
-                                    Status.FAILURE -> {
-                                        isLoading.postValue(false)
-                                        toast.value = response.message.toString()
-                                    }
-                                    Status.LOADING -> {
-                                        isLoading.postValue(true)
-                                    }
+    fun verifyOTP(view: View) {
+        Log.d("verifyOTP", "verifyOTP: work")
+        phoneNumber.value = phoneNumber.value + phone.value
+        if (otp.value != "") {
+            viewModelScope.launch {
+                view.findViewTreeLifecycleOwner()?.let {
+                    repo.validateOTP(pref.getString("Phone").toString(), otp.value.toString())
+                        .observe(it) { response ->
+                            when (response.status) {
+                                Status.SUCCESS -> {
+                                    isLoading.postValue(false)
+                                    view.findNavController()
+                                        .navigate(R.id.otpFragmentToDashboardFragment)
+                                }
+                                Status.FAILURE -> {
+                                    isLoading.postValue(false)
+                                    toast.value = response.message.toString()
+                                }
+                                Status.LOADING -> {
+                                    isLoading.postValue(true)
                                 }
                             }
-                    }
-
+                        }
                 }
             }
         }
     }
+}
