@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.example.washforme.databinding.FragmentDashboardBinding
 import com.example.washforme.viewModel.DashboardViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -15,7 +16,7 @@ class DashboardFragment : Fragment() {
 
     private var binding: FragmentDashboardBinding? = null
 
-    val viewModel : DashboardViewModel by viewModels()
+    val viewModel: DashboardViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -30,8 +31,8 @@ class DashboardFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        setupRecyclerView()
         viewModel.getCategories()
-
         viewModel.listOfCategories.observe(viewLifecycleOwner) {
             viewModel.categoryAdapter.addData(it)
         }
@@ -45,5 +46,12 @@ class DashboardFragment : Fragment() {
         binding?.unbind()
         binding = null
         super.onDestroyView()
+    }
+
+    private fun setupRecyclerView() {
+        binding?.categoryRV?.apply {
+            val gridlayout = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.HORIZONTAL)
+            binding?.categoryRV?.layoutManager = gridlayout
+        }
     }
 }

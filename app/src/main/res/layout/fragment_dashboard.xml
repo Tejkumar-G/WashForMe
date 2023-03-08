@@ -9,7 +9,6 @@
             name="model"
             type="com.example.washforme.viewModel.DashboardViewModel" />
 
-
         <import type="android.view.View" />
 
     </data>
@@ -41,14 +40,14 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/categoryRV"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/categoryRV"
             app:adapter="@{model.categoryAdapter}"
             android:orientation="horizontal"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/logoutBtn"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            tools:listitem="@layout/category_item"/>
+            tools:listitem="@layout/category_item" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

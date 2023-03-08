@@ -11,6 +11,7 @@ import com.example.washforme.db.Status
 import com.example.washforme.model.Categories
 import com.example.washforme.utils.MyPreferenceManager
 import com.example.washforme.view.CategoryAdapter
+import com.example.washforme.view.DashboardFragment
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.launchIn
