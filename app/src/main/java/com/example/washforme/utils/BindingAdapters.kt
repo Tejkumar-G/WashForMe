@@ -21,22 +21,10 @@ fun setAdapter(recyclerView: RecyclerView?, adapter: CategoryAdapter?) {
     }
 }
 
-@SuppressLint("ResourceAsColor")
-@BindingAdapter("setImgBackground")
-fun ImageView.setAdapter(@ColorInt color: Int) {
-    this.background.setTint(color)
-}
-
 @BindingAdapter("setImgSrc")
 fun ImageView.setImage(url: String?) {
     this.load(url) {
         placeholder(R.drawable.ic_shirt)
         error(R.drawable.ic_shirt)
     }
-}
-
-@SuppressLint("ResourceAsColor")
-@BindingAdapter("setCardBackground")
-fun CardView.setImageSource(res: Int) {
-    this.setCardBackgroundColor(res)
 }

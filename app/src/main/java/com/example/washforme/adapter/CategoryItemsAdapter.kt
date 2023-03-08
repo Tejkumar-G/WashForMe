@@ -1,6 +1,7 @@
 package com.example.washforme.adapter
 
 import android.annotation.SuppressLint
+import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -36,24 +37,31 @@ class CategoryItemsAdapter: RecyclerView.Adapter<CategoryItemsAdapter.ItemHolder
 
     inner class ItemHolder(private val binding: CategoryItemsHolderBinding) :
         RecyclerView.ViewHolder(binding.root) {
+
         fun setData(position: Int) {
-            when (position) {
-                0 -> binding.color = colors[0]
-                1 -> binding.color = colors[1]
-                2 -> binding.color = colors[2]
-                3 -> binding.color = colors[3]
+            when (position % colors.size) {
+                0 -> setColor(0)
+                1 -> setColor(1)
+                2 -> setColor(2)
+                3 -> setColor(3)
             }
             binding.items = items[position]
+        }
+
+        @SuppressLint("ResourceType")
+        private fun setColor(pos: Int) {
+            binding.itemCard.setCardBackgroundColor(colors[pos].primary)
+            binding.iconBackground.background.setTint(colors[pos].secondary)
         }
     }
 
     companion object {
         @SuppressLint("ResourceAsColor")
         private val colors = listOf(
-            ItemsCardColors(R.color.card_background_1, R.color.card_light_background_1),
-            ItemsCardColors(R.color.card_background_2, R.color.card_light_background_2),
-            ItemsCardColors(R.color.card_background_3, R.color.card_light_background_3),
-            ItemsCardColors(R.color.card_background_4, R.color.card_light_background_4),
+            ItemsCardColors(Color.parseColor("#FFE4E4"), Color.parseColor("#FFF0F1")),
+            ItemsCardColors(Color.parseColor("#F0E2FC"), Color.parseColor("#F9ECFF")),
+            ItemsCardColors(Color.parseColor("#FFDCBB"), Color.parseColor("#FFF5E7")),
+            ItemsCardColors(Color.parseColor("#D7F8FF"), Color.parseColor("#ECFCFF")),
         )
     }
 }

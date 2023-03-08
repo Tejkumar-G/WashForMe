@@ -10,12 +10,4 @@
 
     <color name="text_color">#253238</color>
 
-    <color name="card_background_1">#FFE4E4</color>
-    <color name="card_light_background_1">#FFF0F1</color>
-    <color name="card_background_2">#F0E2FC</color>
-    <color name="card_light_background_2">#F9ECFF</color>
-    <color name="card_background_3">#FFDCBB</color>
-    <color name="card_light_background_3">#FFF5E7</color>
-    <color name="card_background_4">#D7F8FF</color>
-    <color name="card_light_background_4">#ECFCFF</color>
 </resources>
