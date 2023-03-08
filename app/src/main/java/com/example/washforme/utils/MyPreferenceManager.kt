@@ -29,7 +29,7 @@ class MyPreferenceManager @Inject constructor(private val sharedPref : SharedPre
 
     fun getInt(key: String) = sharedPref.getInt(key, 0)
 
-    fun getString(key: String) = sharedPref.getString(key, null)
+    fun getString(key: String) = sharedPref.getString(key, "5a91ea03cac43769602ae8ead7f07b09063577279507f0e8ce555a5b735182d6")
 
     fun getBoolean(key: String) = sharedPref.getBoolean(key, false)
 

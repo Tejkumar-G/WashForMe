@@ -6,12 +6,13 @@ import android.widget.Toast
 import androidx.lifecycle.*
 import androidx.navigation.findNavController
 import com.example.washforme.R
+import com.example.washforme.adapter.CategoryItemsAdapter
 import com.example.washforme.db.Repository
 import com.example.washforme.db.Status
 import com.example.washforme.model.Categories
+import com.example.washforme.model.WashingItems
 import com.example.washforme.utils.MyPreferenceManager
 import com.example.washforme.view.CategoryAdapter
-import com.example.washforme.view.DashboardFragment
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.launchIn
@@ -27,9 +28,15 @@ class DashboardViewModel @Inject constructor(
 
     val toast = MutableLiveData<String?>()
     private val isLoading = MutableLiveData(false)
-    val listOfCategories: MutableLiveData<Array<Categories>?> = MutableLiveData(null)
+
+    private val _listOfCategories: MutableLiveData<Array<Categories>?> = MutableLiveData(null)
+    val listOfCategories: LiveData<Array<Categories>?> = _listOfCategories
+
+    private val _categoryItems: MutableLiveData<List<WashingItems>?> = MutableLiveData(null)
+    val categoryItems: LiveData<List<WashingItems>?> = _categoryItems
 
     val categoryAdapter = CategoryAdapter(arrayListOf())
+    val itemsAdapter = CategoryItemsAdapter()
 
     fun writeToast(context: Context, message: String?) {
         if (!message.isNullOrEmpty()) {
@@ -63,12 +70,32 @@ class DashboardViewModel @Inject constructor(
 
     fun getCategories() {
         viewModelScope.launch(Dispatchers.Default) {
-
             repo.getCategories().onEach {
                 when(it.status) {
                     Status.SUCCESS ->{
                         isLoading.postValue(false)
-                        listOfCategories.postValue(it.payload)
+                        _listOfCategories.postValue(it.payload)
+//                        categoryAdapter.notifyDataSetChanged()
+                    }
+                    Status.FAILURE -> {
+                            isLoading.postValue(false)
+                            toast.value = it.message.toString()
+                    }
+                    Status.LOADING -> {
+                        isLoading.postValue(true)
+                    }
+                }
+            }.launchIn(this)
+        }
+    }
+
+    fun getWashingItems() {
+        viewModelScope.launch(Dispatchers.Default) {
+            repo.getWashingItems().onEach {
+                when(it.status) {
+                    Status.SUCCESS ->{
+                        isLoading.postValue(false)
+                        _categoryItems.postValue(it.payload)
 //                        categoryAdapter.notifyDataSetChanged()
                     }
                     Status.FAILURE -> {

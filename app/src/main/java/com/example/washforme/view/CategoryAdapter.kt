@@ -28,6 +28,7 @@ class CategoryAdapter(private var data: ArrayList<Categories>) :
     }
 
     override fun getItemCount(): Int = data.size
+
     fun addData(categories: Array<Categories>?) {
         if (categories != null) {
             data.addAll(categories)

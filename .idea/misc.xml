@@ -4,6 +4,10 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/Users/Admin/AndroidStudioProjects/WashForMe/app/src/main/res/layout/fragment_login.xml" value="0.26458333333333334" />
+        <entry key="..\:/WashForMe/app/src/main/res/drawable/ic_add_square.xml" value="0.1725" />
+        <entry key="..\:/WashForMe/app/src/main/res/drawable/ic_dress.xml" value="0.1725" />
+        <entry key="..\:/WashForMe/app/src/main/res/layout/category_items_holder.xml" value="0.67" />
+        <entry key="..\:/WashForMe/app/src/main/res/layout/fragment_dashboard.xml" value="0.25" />
       </map>
     </option>
   </component>

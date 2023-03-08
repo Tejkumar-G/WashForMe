@@ -49,5 +49,14 @@
             app:layout_constraintTop_toBottomOf="@+id/logoutBtn"
             tools:listitem="@layout/category_item" />
 
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/itemsRecycler"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:adapter="@{model.itemsAdapter}"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/categoryRV"
+            tools:listitem="@layout/category_items_holder" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

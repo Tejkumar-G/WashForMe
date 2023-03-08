@@ -4,6 +4,7 @@ import androidx.lifecycle.MutableLiveData
 import com.example.washforme.model.Categories
 import com.example.washforme.model.OtpValidation
 import com.example.washforme.model.PhoneValidation
+import com.example.washforme.model.WashingItems
 import com.example.washforme.utils.Constants
 import com.example.washforme.utils.MyPreferenceManager
 import kotlinx.coroutines.flow.Flow
@@ -83,6 +84,40 @@ class Repository @Inject constructor(
         try {
             val response =
                 api.getWashCategory("Token ${preferences.getString(Constants.TOKEN).toString()}")
+            if (response.isSuccessful) {
+                response.body()?.let {
+                    emit(ResponseData.success(it))
+                }
+            }
+        } catch (e: HttpException) {
+            emit(
+                ResponseData.failure(
+                    msg = "Oops, something went wrong!",
+                    data = null
+                )
+            )
+        } catch (e: IOException) {
+            emit(
+                ResponseData.failure(
+                    msg = "Couldn't reach server, check your internet connection.",
+                    data = null
+                )
+            )
+        } catch (e: NullPointerException) {
+            emit(
+                ResponseData.failure(
+                    msg = "Oops, something went wrong!",
+                    data = null
+                )
+            )
+        }
+    }
+
+    suspend fun getWashingItems(): Flow<ResponseData<List<WashingItems>>> = flow {
+        emit(ResponseData.loading(null))
+        try {
+            val response =
+                api.getWashingItems("Token ${preferences.getString(Constants.TOKEN).toString()}")
             if (response.isSuccessful) {
                 response.body()?.let {
                     emit(ResponseData.success(it))
