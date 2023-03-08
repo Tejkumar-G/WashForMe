@@ -18,13 +18,13 @@ class ModelHelper{
 data class Categories(
     var id : Int?,
     var name : String?,
-    var Image : String?
+    var image : String?
 )
 
 data class WashingItems(
     var id : Int,
     var name : String,
-    var Image : String?
+    var image : String?
 )
 
 @Serializable
