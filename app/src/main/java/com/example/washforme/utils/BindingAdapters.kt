@@ -1,12 +1,12 @@
 package com.example.washforme.utils
 
-import android.annotation.SuppressLint
+import android.content.res.ColorStateList
+import android.graphics.Color
 import android.util.Log
 import android.widget.ImageView
 import androidx.annotation.ColorInt
-import androidx.annotation.ColorRes
-import androidx.annotation.DrawableRes
-import androidx.cardview.widget.CardView
+import androidx.core.content.ContextCompat
+import androidx.core.widget.ImageViewCompat
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
@@ -27,4 +27,10 @@ fun ImageView.setImage(url: String?) {
         placeholder(R.drawable.ic_shirt)
         error(R.drawable.ic_shirt)
     }
+}
+
+@BindingAdapter("setBackgroundTint")
+fun ImageView.setBackgroundTint(@ColorInt colorRes: Int?) {
+    if (colorRes!=null)
+        ImageViewCompat.setImageTintList(this, ColorStateList.valueOf(colorRes))
 }

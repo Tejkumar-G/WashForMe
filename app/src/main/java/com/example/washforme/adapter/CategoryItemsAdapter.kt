@@ -5,10 +5,10 @@ import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.example.washforme.R
 import com.example.washforme.databinding.CategoryItemsHolderBinding
 import com.example.washforme.model.ItemsCardColors
 import com.example.washforme.model.WashingItems
+import com.example.washforme.utils.setBackgroundTint
 
 class CategoryItemsAdapter: RecyclerView.Adapter<CategoryItemsAdapter.ItemHolder>() {
 
@@ -51,7 +51,7 @@ class CategoryItemsAdapter: RecyclerView.Adapter<CategoryItemsAdapter.ItemHolder
         @SuppressLint("ResourceType")
         private fun setColor(pos: Int) {
             binding.itemCard.setCardBackgroundColor(colors[pos].primary)
-            binding.iconBackground.background.setTint(colors[pos].secondary)
+            binding.iconBackground.setBackgroundTint(colors[pos].secondary)
         }
     }
 
