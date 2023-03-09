@@ -1,1 +1,33 @@
+# Android Build Files
+.gradle
 /build
+/captures
+/local.properties
+/outputs
+
+# Android Studio Navigation Editor
+.navigation/
+
+# Android Studio Plugin
+*.iml
+.idea/workspace.xml
+.idea/tasks.xml
+.idea/libraries
+.idea/caches
+.idea/modules.xml
+.idea/navEditor.xml
+.idea/compiler.xml
+.idea/assetWizardSettings.xml
+
+# External native build folder generated in Android Studio 2.2 and later
+.externalNativeBuild
+
+# IntelliJ IDEA files
+*.iws
+
+# Keystore files
+*.jks
+
+# ProGuard files
+proguard-rules.pro
+
