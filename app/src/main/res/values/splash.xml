@@ -3,7 +3,7 @@
 
     <style name="Theme.App.Starting" parent="Theme.SplashScreen">
 
-        <item name="windowSplashScreenBackground">@color/white</item>
+        <item name="windowSplashScreenBackground">@color/primary_white</item>
         <item name="windowSplashScreenAnimatedIcon">@drawable/white_blue_modern_clean_laundry_logo_adobe_express</item>
         <item name="postSplashScreenTheme">@style/Theme.WashForMe</item>
     </style>

@@ -3,10 +3,7 @@ package com.example.washforme.db
 import com.example.washforme.model.*
 import okhttp3.ResponseBody
 import retrofit2.Response
-import retrofit2.http.Body
-import retrofit2.http.GET
-import retrofit2.http.Header
-import retrofit2.http.POST
+import retrofit2.http.*
 
 interface Api {
 
@@ -30,23 +27,30 @@ interface Api {
     @GET("/user_details/")
     suspend fun getUserDetails(
         @Header("Authorization") token: String
-    ) : ModelHelper
+    ) : Response<User>
 
     @GET("/wash_categories/")
     suspend fun getWashCategory(
         @Header("Authorization") token: String
-    ) : Response<Array<Categories>>
+    ) : Response<List<Category>>
 
     @GET("/wash_items/")
     suspend fun getWashingItems(
         @Header("Authorization") token: String
-    ) : Response<List<WashingItems>>
+    ) : Response<List<WashItem>>
+
+    @GET("/wash_items/{pk}")
+    suspend fun getWashingItems(
+        @Header("Authorization") token: String,
+        @Path("pk") id: Int
+    ) : Response<List<WashItem>>
 
     @POST("/create_user_wash_relations/")
     suspend fun createUserWashRelation(
+        @Header("Authorization") token: String,
         @Body
-        Item : WashCategoryItemRelations
-    ) : Response<CreateWashCategoryItemRelationsResponse>
+        categoryRelations: ArrayList<WashCategoryRelation>?
+    ) : Response<UserWashRelation>
 
     @GET("/wash_category_item_relations/")
     suspend fun getWashCategoryItemRelations(
@@ -70,4 +74,22 @@ interface Api {
         userWashRelationId : Int,
         slot : Int
     ) : Response<SlotBookingResponse>
+
+    @GET("/get_all_addresses/")
+    suspend fun getAllAddresses(
+        @Header("Authorization") token: String
+    ): Response<List<UserAddress>>
+
+    @PUT("/change_current_address/{id}/")
+    suspend fun changeCurrentAddress(
+        @Path("id") id: Int,
+        @Header("Authorization") token: String
+    ): Response<UserAddress>
+
+    @PUT("/update_address/{id}/")
+    suspend fun updateCurrentAddress(
+        @Path("id") id: Int,
+        @Body userAddress: UserAddress,
+        @Header("Authorization") token: String
+    ): Response<UserAddress>
 }

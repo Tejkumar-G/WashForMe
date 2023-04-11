@@ -15,17 +15,7 @@ class ModelHelper{
     var email : String?= null
 }
 
-data class Categories(
-    var id : Int?,
-    var name : String?,
-    var image : String?
-)
 
-data class WashingItems(
-    var id : Int,
-    var name : String,
-    var image : String?
-)
 
 @Serializable
  class WashCategoryItemRelations{
@@ -41,17 +31,9 @@ class WashCategoryRelationList {
     var itemIds: List<Int?>? = null
 }
 
-data class CreateWashCategoryItemRelationsResponse (
-    var id: Int?,
-    var user: UserX?,
-    var wash_category_relations: List<WashCategoryRelationX>?
-    )
 
-data class UserX(
-    var email: String?,
-    var id: Int?,
-    var phone: String?
-)
+
+
 
 data class WashCategoryRelationX(
     var category: Category?,
@@ -73,13 +55,8 @@ data class WashCategoryItemRelationsItem(
     var items: List<Item>?
 )
 
-class UserWashRelation : ArrayList<UserWashRelationItem>()
 
-data class UserWashRelationItem(
-    var id: Int?,
-    var user: UserX?,
-    var wash_category_relations: List<WashCategoryRelationX>?
-)
+
 
 class GetTimeSlotResponse : ArrayList<GetTimeSlotsResponseItem>()
 
@@ -97,7 +74,6 @@ data class GetTimeSlotsResponseItem(
 data class SlotBookingResponse(
     var id: Int?,
     var slot: Slot?,
-    var user: UserX?,
     var user_wash_relation: UserWashRelation?
 )
 

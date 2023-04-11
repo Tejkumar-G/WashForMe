@@ -1,10 +1,7 @@
 package com.example.washforme.db
 
 import androidx.lifecycle.MutableLiveData
-import com.example.washforme.model.Categories
-import com.example.washforme.model.OtpValidation
-import com.example.washforme.model.PhoneValidation
-import com.example.washforme.model.WashingItems
+import com.example.washforme.model.*
 import com.example.washforme.utils.Constants
 import com.example.washforme.utils.MyPreferenceManager
 import kotlinx.coroutines.flow.Flow
@@ -79,7 +76,7 @@ class Repository @Inject constructor(
         return result
     }
 
-    suspend fun getCategories(): Flow<ResponseData<Array<Categories>>> = flow {
+    suspend fun getCategories(): Flow<ResponseData<List<Category>>> = flow {
         emit(ResponseData.loading(null))
         try {
             val response =
@@ -113,11 +110,11 @@ class Repository @Inject constructor(
         }
     }
 
-    suspend fun getWashingItems(): Flow<ResponseData<List<WashingItems>>> = flow {
+    suspend fun getWashingItems(id: Int?= null): Flow<ResponseData<List<WashItem>>> = flow {
         emit(ResponseData.loading(null))
         try {
-            val response =
-                api.getWashingItems("Token ${preferences.getString(Constants.TOKEN).toString()}")
+            val token = "Token ${preferences.getString(Constants.TOKEN)}"
+            val response = if (id==null) api.getWashingItems(token) else api.getWashingItems(token, id)
             if (response.isSuccessful) {
                 response.body()?.let {
                     emit(ResponseData.success(it))
@@ -143,6 +140,134 @@ class Repository @Inject constructor(
                     msg = "Oops, something went wrong!",
                     data = null
                 )
+            )
+        }
+    }
+
+    suspend fun createUserWashRelation(categoryRelations: ArrayList<WashCategoryRelation>?): Flow<ResponseData<UserWashRelation>> = flow  {
+        emit(ResponseData.loading(null))
+        try {
+            val response = api.createUserWashRelation("Token ${preferences.getString(Constants.TOKEN).toString()}", categoryRelations)
+
+            if (response.isSuccessful) {
+                emit(ResponseData.success(response.body()))
+            } else {
+                emit(ResponseData.failure(response.errorBody().toString(), null))
+            }
+        } catch (e: Exception) {
+            emit(ResponseData.failure("Internal Error $e", null))
+        }
+    }
+
+    fun getUser(): Flow<ResponseData<User>> = flow {
+        emit(ResponseData.loading(null))
+        try {
+            val response = api.getUserDetails("Token ${preferences.getString(Constants.TOKEN)}")
+
+            if (response.isSuccessful) {
+                emit(ResponseData.success(response.body()))
+            } else {
+                emit(ResponseData.failure(response.errorBody().toString(), null))
+            }
+        } catch (e: Exception) {
+            emit(ResponseData.failure("Internal Error $e", null))
+        }
+    }
+
+    suspend fun getAllAddresses(): Flow<ResponseData<List<UserAddress>>> = flow {
+        emit(ResponseData.loading(null))
+        try {
+            val response =
+                api.getAllAddresses("Token ${preferences.getString(Constants.TOKEN)}")
+            if (response.isSuccessful) {
+                response.body()?.let {
+                    emit(ResponseData.success(it))
+                }
+            }
+        } catch (e: HttpException) {
+            emit(
+                ResponseData.failure(
+                    msg = "Oops, something went wrong!",
+                    data = null
+                )
+            )
+        } catch (e: IOException) {
+            emit(
+                ResponseData.failure(
+                    msg = "Couldn't reach server, check your internet connection.",
+                    data = null
+                )
+            )
+        } catch (e: NullPointerException) {
+            emit(
+                ResponseData.failure(
+                    msg = "Oops, something went wrong!",
+                    data = null
+                )
+            )
+        }
+    }
+
+    suspend fun changeCurrentAddress(id: Int): Flow<ResponseData<UserAddress>> = flow {
+        emit(ResponseData.loading(null))
+        try {
+            val response =
+                api.changeCurrentAddress(id, "Token ${preferences.getString(Constants.TOKEN)}")
+            if (response.isSuccessful) {
+                response.body()?.let {
+                    emit(ResponseData.success(it))
+                }
+            }
+        } catch (e: HttpException) {
+            emit(
+                ResponseData.failure(
+                    msg = "Couldn't reach server, check your internet connection.",
+                    data = null
+                )
+            )
+        } catch (e: IOException) {
+            emit(
+                ResponseData.failure(
+                    msg = "Couldn't reach server, check your internet connection.",
+                    data = null
+                )
+            )
+        } catch (e: NullPointerException) {
+            ResponseData.failure(
+                msg = "Oops, something went wrong!",
+                data = null
+            )
+        }
+    }
+
+    suspend fun updateCurrentAddress(id: Int, userAddress: UserAddress): Flow<ResponseData<UserAddress>> = flow {
+        emit(ResponseData.loading(null))
+        try {
+            val response =
+                api.updateCurrentAddress(id, userAddress, "Token ${preferences.getString(Constants.TOKEN)}")
+            if (response.isSuccessful) {
+                response.body()?.let {
+                    emit(ResponseData.success(it))
+                }
+            }
+        } catch (e: HttpException) {
+            emit(
+                ResponseData.failure(
+                    msg = "Couldn't reach server, check your internet connection.",
+                    data = null
+                )
+            )
+        } catch (e: IOException) {
+            emit(
+                ResponseData.failure(
+                    msg = "Couldn't reach server, check your internet connection.",
+                    data = null
+                )
+            )
+        } catch (e: NullPointerException) {
+            ResponseData.failure(
+                msg = "Oops, something went wrong!",
+                data = null
             )
         }
     }

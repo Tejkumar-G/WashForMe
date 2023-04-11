@@ -1,26 +1,28 @@
 package com.example.washforme.view
 
-import android.graphics.Rect
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.SimpleItemAnimator
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
+import com.example.washforme.R
 import com.example.washforme.databinding.FragmentDashboardBinding
-import com.example.washforme.viewModel.DashboardViewModel
+import com.example.washforme.roomdb.AppDatabase
+import com.example.washforme.utils.getNavigationResult
+import com.example.washforme.viewModel.MainViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
+
 @AndroidEntryPoint
-class DashboardFragment : Fragment() {
+class DashboardFragment(val viewModel: MainViewModel) : Fragment() {
 
     private lateinit var binding: FragmentDashboardBinding
 
-    val viewModel: DashboardViewModel by viewModels()
+//    val viewModel: MainViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -28,8 +30,8 @@ class DashboardFragment : Fragment() {
     ): View {
         binding = FragmentDashboardBinding.inflate(inflater, container, false).apply {
             model = viewModel
+            lifecycleOwner = viewLifecycleOwner
         }
-        binding.lifecycleOwner = viewLifecycleOwner
         return binding.root
     }
 
@@ -37,19 +39,54 @@ class DashboardFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         setupRecyclerView()
         viewModel.getCategories()
-        viewModel.getWashingItems()
+        AppDatabase.getInstance(requireContext())?.let {
+            viewModel.dbHelper = it.cartDao()
+            viewModel.checkForLatestCart()
+        }
+
         viewModel.listOfCategories.observe(viewLifecycleOwner) {
             viewModel.categoryAdapter.addData(it)
+            viewModel.updateItems(it?.get(0)?.id)
         }
 
         viewModel.categoryItems.observe(viewLifecycleOwner) {
-            it?.let { it1 -> viewModel.itemsAdapter.setItemsList(it1) }
+            it?.let { item -> viewModel.itemsAdapter.setItemsList(item) }
         }
 
         viewModel.toast.observe(viewLifecycleOwner) {
             viewModel.writeToast(requireContext(), it)
         }
+
+        viewModel.currentCart.observe(viewLifecycleOwner) {
+            if (viewModel.itemsAdapter.canRefresh) {
+                viewModel.itemsAdapter.refresh()
+            }
+            if (it.isNullOrEmpty()) {
+                binding.itemsCard.visibility = View.GONE
+                binding.viewForBottomPadding.visibility = View.GONE
+            } else {
+                binding.itemsCard.visibility = View.VISIBLE
+                binding.viewForBottomPadding.visibility = View.VISIBLE
+                viewModel.updateCountAndPrice()
+            }
+        }
+
+        binding.clAddress.setOnClickListener {
+            findNavController().navigate(R.id.action_mainFragment_to_addressFragment)
+        }
+
+
+        viewModel.updateAddress(binding, binding.userAddress)
+
+        getNavigationResult()?.observe(viewLifecycleOwner) {
+            if (it==true) {
+                viewModel.updateAddress(binding, binding.userAddress)
+            }
+        }
+
     }
+
+
 
     override fun onDestroyView() {
         binding.unbind()
@@ -58,37 +95,11 @@ class DashboardFragment : Fragment() {
 
     private fun setupRecyclerView() {
         binding.categoryRV.apply {
-            val gridlayout = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.HORIZONTAL)
-            binding.categoryRV.layoutManager = gridlayout
+            layoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.HORIZONTAL)
+            (itemAnimator as? SimpleItemAnimator)?.supportsChangeAnimations = false
         }
-
         binding.itemsRecycler.apply {
             layoutManager = GridLayoutManager(requireContext(), 2)
-            setHasFixedSize(true)
-            addItemDecoration(object : RecyclerView.ItemDecoration() {
-                override fun getItemOffsets(outRect: Rect, view: View, parent: RecyclerView, state: RecyclerView.State) {
-                    super.getItemOffsets(outRect, view, parent, state)
-                    val position: Int = parent.getChildAdapterPosition(view) // item position
-
-                    val spanCount = 2
-                    val spacing = 25 //spacing between views in grid
-
-                    if (position >= 0) {
-                        val column = position % spanCount // item column
-                        outRect.left = spacing - column * spacing / spanCount // spacing - column * ((1f / spanCount) * spacing)
-                        outRect.right = (column + 1) * spacing / spanCount // (column + 1) * ((1f / spanCount) * spacing)
-                        if (position < spanCount) { // top edge
-                            outRect.top = spacing
-                        }
-                        outRect.bottom = spacing // item bottom
-                    } else {
-                        outRect.left = 0
-                        outRect.right = 0
-                        outRect.top = 0
-                        outRect.bottom = 0
-                    }
-                }
-            })
         }
     }
 }

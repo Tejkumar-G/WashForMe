@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
-
-    <item android:drawable="@color/white"/>
-
-    <item android:drawable="@drawable/white_blue_modern_clean_laundry_logo_adobe_express" android:gravity="center"/>
-
-</layer-list>

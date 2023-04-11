@@ -37,8 +37,12 @@ class LoginFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        if (!myPreferenceManager.getString(Constants.TOKEN).isNullOrEmpty()) {
-            this.findNavController().navigate(R.id.loginToDashboardFragment)
+        val token = myPreferenceManager.getString(Constants.TOKEN)
+        if (token.isNotEmpty()) {
+            if (myPreferenceManager.getString("USER").isEmpty()) {
+                loginViewModel.getUser()
+            }
+            this.findNavController().navigate(R.id.loginToMainFragment)
         } else {
             loginViewModel.toast.observe(viewLifecycleOwner) {
                 loginViewModel.writeToast(requireContext(), it)

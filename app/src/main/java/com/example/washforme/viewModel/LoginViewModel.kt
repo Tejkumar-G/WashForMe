@@ -11,8 +11,11 @@ import com.example.washforme.db.Repository
 import com.example.washforme.db.Status
 import com.example.washforme.utils.Constants
 import com.example.washforme.utils.MyPreferenceManager
+import com.google.gson.Gson
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -89,6 +92,26 @@ class LoginViewModel @Inject constructor(
                         }
                 }
             }
+        }
+    }
+
+    fun getUser() {
+        viewModelScope.launch(Dispatchers.Default) {
+            repo.getUser().onEach {
+                when (it.status) {
+                    Status.SUCCESS -> {
+                        isLoading.postValue(false)
+                        pref.set(Constants.USER, Gson().toJson(it.payload))
+                    }
+                    Status.FAILURE -> {
+                        isLoading.postValue(false)
+                        toast.postValue(it.message.toString())
+                    }
+                    Status.LOADING -> {
+                        isLoading.postValue(true)
+                    }
+                }
+            }.launchIn(this)
         }
     }
 }

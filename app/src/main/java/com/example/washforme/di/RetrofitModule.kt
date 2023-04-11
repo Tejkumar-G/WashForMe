@@ -1,8 +1,8 @@
 package com.example.washforme.di
 
+import com.example.washforme.BuildConfig
 import com.example.washforme.db.Api
 import com.example.washforme.db.Repository
-import com.example.washforme.utils.Constants
 import com.example.washforme.utils.MyPreferenceManager
 import dagger.Module
 import dagger.Provides
@@ -23,7 +23,7 @@ object RetrofitModule {
     @Provides
     fun retrofitProvider(okHttpClient: OkHttpClient): Retrofit {
         return Retrofit.Builder()
-            .baseUrl(Constants.BASE_URL)
+            .baseUrl(BuildConfig.BASE_URL)
             .addConverterFactory(GsonConverterFactory.create())
             .client(okHttpClient)
             .build()
