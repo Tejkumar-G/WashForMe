@@ -8,7 +8,7 @@
             name="category"
             type="com.example.washforme.model.Category" />
         <variable
-            name="selectedColorBlack"
+            name="showListOfItems"
             type="Boolean" />
 
     </data>
@@ -34,59 +34,35 @@
             android:layout_marginVertical="30dp"
             android:layout_marginHorizontal="5dp">
 
-            <View
-                android:id="@+id/line"
-                android:layout_width="match_parent"
-                android:layout_height="2dp"
-                android:background="@color/black"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent" />
-
-            <View
-                android:id="@+id/categoryBackground"
-                android:layout_width="150dp"
-                android:layout_height="25dp"
-                android:background="@{selectedColorBlack?@drawable/dark_round:@drawable/rounded_corner}"
-                app:layout_constraintTop_toTopOf="@id/line"
-                app:layout_constraintBottom_toBottomOf="@id/line"
-                app:layout_constraintStart_toStartOf="@id/line"
-                android:layout_marginStart="30dp"/>
-
-
             <TextView
                 android:id="@+id/categoryName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:layout_constraintTop_toTopOf="@id/line"
-                app:layout_constraintBottom_toBottomOf="@id/line"
-                app:layout_constraintStart_toStartOf="@id/categoryBackground"
-                app:layout_constraintEnd_toEndOf="@id/categoryBackground"
-                android:textColor="@{selectedColorBlack?@color/primary_white:@color/black}"
-                android:fontFamily="@font/kalam_regular"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                android:layout_marginStart="10dp"
+                android:textColor="@color/black"
+                style="@style/BoldText"
                 android:text="@={category.name}" />
 
             <View
                 android:id="@+id/categoryCountBackground"
                 android:layout_width="25dp"
                 android:layout_height="25dp"
-                android:background="@{selectedColorBlack?@drawable/dark_round:@drawable/rounded_corner}"
-                app:layout_constraintTop_toTopOf="@id/line"
-                app:layout_constraintBottom_toBottomOf="@id/line"
-                app:layout_constraintEnd_toEndOf="@id/line"
+                android:background="@{showListOfItems?@drawable/arrow_up:@drawable/next_icon}"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
                 android:layout_marginEnd="30dp"/>
 
             <TextView
                 android:id="@+id/categoryCount"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:layout_constraintTop_toTopOf="@id/line"
-                app:layout_constraintBottom_toBottomOf="@id/line"
-                app:layout_constraintStart_toStartOf="@id/categoryCountBackground"
-                app:layout_constraintEnd_toEndOf="@id/categoryCountBackground"
-                android:textColor="@{selectedColorBlack?@color/primary_white:@color/black}"
-                android:fontFamily="@font/kalam_regular" />
+                app:layout_constraintTop_toBottomOf="@id/categoryName"
+                app:layout_constraintStart_toStartOf="@id/categoryName"
+                android:textColor="@color/purple_200"
+                style="@style/RegularText" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <View

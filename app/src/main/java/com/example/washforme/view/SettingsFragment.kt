@@ -11,8 +11,6 @@ import androidx.fragment.app.Fragment
 import com.example.washforme.R
 import com.example.washforme.databinding.FragmentSettingsBinding
 import com.example.washforme.model.Settings
-import com.example.washforme.model.User
-import com.example.washforme.utils.Constants
 import com.example.washforme.utils.MyPreferenceManager
 import com.example.washforme.viewModel.MainViewModel
 import com.google.gson.Gson
@@ -43,9 +41,7 @@ class SettingsFragment(val viewModel: MainViewModel) : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentSettingsBinding.inflate(LayoutInflater.from(context), container, false)
-        val stringUser = myPreferenceManager.getString(Constants.USER)
-        val user = Gson().fromJson(stringUser, User::class.java)
-        val settings = Gson().fromJson(user.settings, Settings::class.java)
+        val settings = Gson().fromJson(viewModel.user.settings, Settings::class.java)
         viewModel.darkMode.postValue(settings.darkMode != "Yes")
 
         binding.apply {

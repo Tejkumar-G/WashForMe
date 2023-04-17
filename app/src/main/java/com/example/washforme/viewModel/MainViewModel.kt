@@ -19,10 +19,7 @@ import com.example.washforme.model.WashCategoryRelation
 import com.example.washforme.model.WashItem
 import com.example.washforme.roomdb.Cart
 import com.example.washforme.roomdb.CartDao
-import com.example.washforme.utils.CalledFrom
-import com.example.washforme.utils.Constants
-import com.example.washforme.utils.ItemCount
-import com.example.washforme.utils.MyPreferenceManager
+import com.example.washforme.utils.*
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -52,6 +49,9 @@ class MainViewModel @Inject constructor(
     val itemsAdapter = ItemAdapter(arrayListOf(), this)
 
     val cartAdapter = CartCategoryAdapter(arrayListOf(), this)
+
+    val user = pref.getUser()
+    val slotBookSingleEvent = SingleLiveEvent<Boolean?>()
 
 
     private val _currentCart: MutableLiveData<ArrayList<WashCategoryRelation>?> = MutableLiveData(
@@ -326,26 +326,24 @@ class MainViewModel @Inject constructor(
         }
     }
 
-     fun onBackPressed() {
 
-    }
 
     fun onSwitchChange(isChecked: Boolean) {
         _darkMode.postValue(isChecked)
     }
 
-    fun updateAddress(binding: FragmentDashboardBinding, userAddress: UserAddress?) {
+    fun updateAddress(binding: FragmentDashboardBinding, userAddress: UserAddress?, initialAddress: Boolean) {
         val userAddressFromPreference =
             Gson().fromJson(pref.getString(Constants.CURRENT_ADDRESS), UserAddress::class.java)
-        if (userAddress == null || userAddress.id != userAddressFromPreference.id) {
+        if ((userAddress == null || userAddress.id != userAddressFromPreference.id) || initialAddress) {
+            user.defaultAddress = userAddressFromPreference
+            pref.setUser(user)
             binding.userAddress = userAddressFromPreference
             binding.executePendingBindings()
         }
-
-
     }
 
-
-
-
+    fun openSlotBook() {
+        slotBookSingleEvent.postValue(true)
+    }
 }

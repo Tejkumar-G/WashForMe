@@ -1,6 +1,8 @@
 package com.example.washforme.utils
 
 import android.content.SharedPreferences
+import com.example.washforme.model.User
+import com.google.gson.Gson
 import javax.inject.Inject
 
 class MyPreferenceManager @Inject constructor(private val sharedPref : SharedPreferences) {
@@ -46,4 +48,15 @@ class MyPreferenceManager @Inject constructor(private val sharedPref : SharedPre
         editor.clear()
             .apply()
     }
+
+    fun getUser(): User {
+        val stringUser = getString(Constants.USER)
+        return Gson().fromJson(stringUser, User::class.java)
+    }
+
+    fun setUser(user: User?) {
+        set(Constants.USER, Gson().toJson(user))
+    }
+
+
 }

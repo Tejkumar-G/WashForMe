@@ -118,6 +118,16 @@ dependencies {
 
     implementation 'androidx.viewpager2:viewpager2:1.1.0-beta01'
 
+    androidTestImplementation 'androidx.test.ext:junit:1.1.5'
+    androidTestImplementation "androidx.test.espresso:espresso-core:3.5.1"
+    androidTestImplementation "io.mockk:mockk-android:1.11.0"
+    androidTestImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:1.5.0"
+    androidTestImplementation "io.insert-koin:koin-test-junit4:3.0.2"
+    androidTestImplementation "com.google.truth:truth:1.1.2"
+    debugImplementation "androidx.fragment:fragment-testing:1.5.5"
+    androidTestImplementation 'androidx.navigation:navigation-testing:2.5.3'
+
+
 }
 
 // Allow references to generated code

@@ -22,7 +22,6 @@ class DashboardFragment(val viewModel: MainViewModel) : Fragment() {
 
     private lateinit var binding: FragmentDashboardBinding
 
-//    val viewModel: MainViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -76,17 +75,14 @@ class DashboardFragment(val viewModel: MainViewModel) : Fragment() {
         }
 
 
-        viewModel.updateAddress(binding, binding.userAddress)
+        viewModel.updateAddress(binding, viewModel.user.defaultAddress, true)
 
         getNavigationResult()?.observe(viewLifecycleOwner) {
-            if (it==true) {
-                viewModel.updateAddress(binding, binding.userAddress)
+            if (it == true) {
+                viewModel.updateAddress(binding, viewModel.user.defaultAddress, false)
             }
         }
-
     }
-
-
 
     override fun onDestroyView() {
         binding.unbind()

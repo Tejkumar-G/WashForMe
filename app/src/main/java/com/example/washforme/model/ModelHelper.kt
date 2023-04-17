@@ -58,18 +58,8 @@ data class WashCategoryItemRelationsItem(
 
 
 
-class GetTimeSlotResponse : ArrayList<GetTimeSlotsResponseItem>()
 
-data class GetTimeSlotsResponseItem(
-    var available: Boolean?,
-    var available_quota: Int?,
-    var date: String?,
-    var end_time: String?,
-    var filled_quota: Int?,
-    var id: Int?,
-    var schedule_completed: Boolean?,
-    var start_time: String?
-)
+
 
 data class SlotBookingResponse(
     var id: Int?,

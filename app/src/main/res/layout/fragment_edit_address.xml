@@ -113,7 +113,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="textPostalAddress"
-                    android:text='@{userAddress.address.postcode+""}' />
+                    android:text='@{userAddress.address.postcode==null?"":(userAddress.address.postcode+"")}' />
 
             </com.google.android.material.textfield.TextInputLayout>
 

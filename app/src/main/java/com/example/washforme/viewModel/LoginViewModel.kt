@@ -11,7 +11,6 @@ import com.example.washforme.db.Repository
 import com.example.washforme.db.Status
 import com.example.washforme.utils.Constants
 import com.example.washforme.utils.MyPreferenceManager
-import com.google.gson.Gson
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.launchIn
@@ -101,7 +100,7 @@ class LoginViewModel @Inject constructor(
                 when (it.status) {
                     Status.SUCCESS -> {
                         isLoading.postValue(false)
-                        pref.set(Constants.USER, Gson().toJson(it.payload))
+                        pref.setUser(it.payload)
                     }
                     Status.FAILURE -> {
                         isLoading.postValue(false)

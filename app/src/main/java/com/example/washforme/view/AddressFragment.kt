@@ -60,15 +60,30 @@ class AddressFragment : Fragment() {
 
         viewModel.addressForEditingSingleEvent.observe(viewLifecycleOwner) {
             it?.let {
-                val userAddressGson = Gson().toJson(it)
-                findNavController().navigate(
-                    R.id.action_addressFragment_to_editAddressFragment,
-                    bundleOf("userAddressGson" to userAddressGson)
-                )
-                viewModel.addressForEditingSingleEvent.call()
+                if (it.id==null) {
+                    findNavController().navigate(
+                        R.id.action_addressFragment_to_editAddressFragment
+                    )
+                } else {
+                    val userAddressGson = Gson().toJson(it)
+                    findNavController().navigate(
+                        R.id.action_addressFragment_to_editAddressFragment,
+                        bundleOf("userAddressGson" to userAddressGson)
+                    )
+                    viewModel.addressForEditingSingleEvent.call()
+                }
             }
+
         }
 
+    }
+
+    override fun onResume() {
+        super.onResume()
+        if (viewModel.exitFromScreen.value == true) {
+            viewModel.getAllAddresses()
+            viewModel.exitFromScreen.value = false
+        }
 
     }
 

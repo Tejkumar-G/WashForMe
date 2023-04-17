@@ -42,7 +42,7 @@ class CartCategoryAdapter(
         fun setData(position: Int) {
             binding.category = cartData[position].category
             val cartItems = cartData[position].items
-            binding.categoryCount.text = getItemsCount(cartItems)
+            binding.categoryCount.text = "${getItemsCount(cartItems)} Items"
             if (listOfShownVariables[position]) {
                 binding.itemsRecyclerView.apply {
                     this.visibility = View.VISIBLE
@@ -56,7 +56,7 @@ class CartCategoryAdapter(
                 val cartItemAdapter = CartItemAdapter(arrayListOf(), viewModel, cartData[position].category?.id?:-1, this@CartCategoryAdapter)
                 binding.itemsRecyclerView.adapter = cartItemAdapter
                 cartItemAdapter.updateItems(cartItems)
-                binding.selectedColorBlack = true
+                binding.showListOfItems = true
             } else {
 
                 binding.itemsRecyclerView.apply {
@@ -70,7 +70,7 @@ class CartCategoryAdapter(
                         })
                 }
 
-                binding.selectedColorBlack = false
+                binding.showListOfItems = false
 
             }
 

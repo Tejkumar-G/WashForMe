@@ -271,4 +271,63 @@ class Repository @Inject constructor(
             )
         }
     }
+
+    suspend fun createNewAddress(userAddress: UserAddress): Flow<ResponseData<UserAddress>> = flow {
+        emit(ResponseData.loading(null))
+        try {
+            val response =
+                api.createNewAddress(userAddress, "Token ${preferences.getString(Constants.TOKEN)}")
+            if (response.isSuccessful) {
+                emit(ResponseData.success(response.body()))
+            }
+        } catch (e: HttpException) {
+            emit(
+                ResponseData.failure(
+                    msg = "Couldn't reach server, check your internet connection.",
+                    data = null
+                )
+            )
+        } catch (e: IOException) {
+            emit(
+                ResponseData.failure(
+                    msg = "Couldn't reach server, check your internet connection.",
+                    data = null
+                )
+            )
+        } catch (e: NullPointerException) {
+            ResponseData.failure(
+                msg = "Oops, something went wrong!",
+                data = null
+            )
+        }
+    }
+
+    suspend fun getPickUpSlots(): Flow<ResponseData<PickUpSlots>> = flow {
+        emit(ResponseData.loading(null))
+        try {
+            val response = api.getPickUpSlots("Token ${preferences.getString(Constants.TOKEN)}")
+            if (response.isSuccessful) {
+                emit(ResponseData.success(response.body()))
+            }
+        } catch (e: HttpException) {
+            emit(
+                ResponseData.failure(
+                    msg = "Couldn't reach server, check your internet connection.",
+                    data = null
+                )
+            )
+        } catch (e: IOException) {
+            emit(
+                ResponseData.failure(
+                    msg = "Couldn't reach server, check your internet connection.",
+                    data = null
+                )
+            )
+        } catch (e: NullPointerException) {
+            ResponseData.failure(
+                msg = "Oops, something went wrong!",
+                data = null
+            )
+        }
+    }
 }

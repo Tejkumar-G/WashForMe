@@ -62,10 +62,7 @@ interface Api {
         @Header("Authorization") token: String
     ) : Response<UserWashRelation>
 
-    @GET("/get_time_slots/")
-    suspend fun getTimeSlots(
-        @Header("Authorization") token: String
-    ) : Response<GetTimeSlotResponse>
+
 
     @POST("/book_slot/")
     suspend fun slotBooking(
@@ -92,4 +89,15 @@ interface Api {
         @Body userAddress: UserAddress,
         @Header("Authorization") token: String
     ): Response<UserAddress>
+
+    @POST("/add_address/")
+    suspend fun createNewAddress(
+        @Body userAddress: UserAddress,
+        @Header("Authorization") token: String
+    ): Response<UserAddress>
+
+    @GET("/get_pick_up_time_slots/")
+    suspend fun getPickUpSlots(
+        @Header("Authorization") token: String
+    ): Response<PickUpSlots>
 }

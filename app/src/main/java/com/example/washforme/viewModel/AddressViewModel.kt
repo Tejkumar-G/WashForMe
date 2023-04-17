@@ -37,7 +37,7 @@ class AddressViewModel @Inject constructor(
 
     var userAddress: UserAddress? = null
 
-    val addressForEditingSingleEvent = SingleLiveEvent<UserAddress>()
+    val addressForEditingSingleEvent = SingleLiveEvent<UserAddress?>()
 
     val isAddressTypeVisible = MutableLiveData(false)
 
@@ -99,8 +99,14 @@ class AddressViewModel @Inject constructor(
         country: String?,
         otherAddressType: String?
     ) {
-        val address = Address(addressLineOne ?: "", addressLineTwo ?: "", city ?: "", postcode?.toInt() ?: 0, country ?: "")
-        userAddress?.address = address
+        val address = Address(
+            addressLineOne ?: "",
+            addressLineTwo ?: "",
+            city ?: "",
+            postcode?.toInt() ?: 0,
+            country ?: ""
+        )
+
         val addressType = this.addressType.value?.let {
             if (it == "other") {
                 if (otherAddressType?.isEmpty() == true) {
@@ -114,8 +120,35 @@ class AddressViewModel @Inject constructor(
 
 
         }
-        userAddress?.addressType = addressType
-        userAddress?.let { updateCurrentAddress(it) }
+        if (userAddress!=null) {
+            userAddress?.address = address
+            userAddress?.addressType = addressType
+            userAddress?.let { updateCurrentAddress(it) }
+        } else {
+            val newUserAddress = UserAddress(address = address, addressType = addressType, currentAddress = false)
+            createNewAddress(newUserAddress)
+        }
+
+    }
+
+    private fun createNewAddress(userAddress: UserAddress) {
+        viewModelScope.launch(Dispatchers.Default) {
+            repo.createNewAddress(userAddress).onEach {
+                when (it.status) {
+                    Status.SUCCESS -> {
+                        isLoading.postValue(false)
+                        exitFromScreen.postValue(true)
+                    }
+                    Status.FAILURE -> {
+                        isLoading.postValue(false)
+                        toast.postValue(it.message.toString())
+                    }
+                    Status.LOADING -> {
+                        isLoading.postValue(true)
+                    }
+                }
+            }.launchIn(this)
+        }
     }
 
     private fun updateCurrentAddress(userAddress: UserAddress) {
@@ -141,13 +174,12 @@ class AddressViewModel @Inject constructor(
     }
 
 
-
     fun changeAddressTypeView(currentChip: Chip, chipOne: Chip, chipTwo: Chip) {
         isAddressTypeVisible.value?.takeIf { it }?.let {
             isAddressTypeVisible.postValue(false)
         }
         currentChip.text.toString().lowercase().let {
-            if (it!=_addressType.value) {
+            if (it != _addressType.value) {
                 _addressType.postValue(it)
                 return
             }
@@ -171,8 +203,9 @@ class AddressViewModel @Inject constructor(
             }
 
         }
-
     }
 
-
+    fun createAddress() {
+        addressForEditingSingleEvent.postValue(UserAddress())
+    }
 }

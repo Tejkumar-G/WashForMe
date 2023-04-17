@@ -4,9 +4,13 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
+import com.example.washforme.R
 import com.example.washforme.databinding.FragmentCartBinding
 import com.example.washforme.viewModel.MainViewModel
+import com.google.gson.Gson
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -30,14 +34,17 @@ class CartFragment(val viewModel: MainViewModel) : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-//        AppDatabase.getInstance(requireContext())?.let {
-//            viewModel.dbHelper = it.cartDao()
-//            viewModel.checkForLatestCart()
-//        }
+
 
         viewModel.currentCart.observe(viewLifecycleOwner) {
             if (viewModel.cartAdapter.cartData.isEmpty())
                 viewModel.cartAdapter.updateCart(it)
+        }
+
+        viewModel.slotBookSingleEvent.observe(viewLifecycleOwner) {
+            val json = Gson().toJson(viewModel.currentCart.value)
+
+            findNavController().navigate(R.id.action_mainFragment_to_pickUpSlotFragment, bundleOf("cart" to json))
         }
 
     }

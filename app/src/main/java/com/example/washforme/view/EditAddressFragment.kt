@@ -46,14 +46,18 @@ class EditAddressFragment : Fragment() {
             if (it)
                 findNavController().popBackStack()
         }
-        binding.topLayout.headerName = "EditAddress"
-
         val stringJson = arguments?.getString("userAddressGson")
+
+
+
         if (!stringJson.isNullOrEmpty()) {
             val userAddress = Gson().fromJson(stringJson, UserAddress::class.java)
             viewModel.userAddress = userAddress
             binding.userAddress = userAddress
             viewModel.addAddressType(userAddress)
+            binding.topLayout.headerName = "Edit Address"
+        } else {
+            binding.topLayout.headerName = "Add Address"
         }
 
         binding.chipHome.addDefaultChipDetails()

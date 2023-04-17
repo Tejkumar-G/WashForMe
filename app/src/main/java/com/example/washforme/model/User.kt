@@ -11,6 +11,8 @@ data class User(
     var id: Int?,
     var phone: String?,
     @SerializedName("other_details")
-    var settings: String?
+    var settings: String?,
+    @SerializedName("default_address")
+    var defaultAddress: UserAddress?
 
 )

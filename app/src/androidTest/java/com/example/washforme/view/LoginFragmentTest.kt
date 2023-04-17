@@ -8,9 +8,9 @@ import com.example.washforme.R
 import com.example.washforme.utils.Constants
 import com.example.washforme.utils.MyPreferenceManager
 import com.google.common.truth.Truth.assertThat
+import io.mockk.mockk
 import org.junit.Test
 import org.junit.runner.RunWith
-import org.mockito.Mockito
 
 @RunWith(AndroidJUnit4ClassRunner::class)
 class LoginFragmentTest {
@@ -21,7 +21,7 @@ class LoginFragmentTest {
         val navController = TestNavHostController(
             ApplicationProvider.getApplicationContext()
         )
-        val pref = Mockito.mock(MyPreferenceManager::class.java)
+        val pref = mockk<MyPreferenceManager>()
         pref.set(Constants.TOKEN, "abcdefghijklmnopqrstuvwxyz,./")
 
         val loginFragment = launchFragmentInContainer<LoginFragment>()
@@ -35,7 +35,7 @@ class LoginFragmentTest {
             ApplicationProvider.getApplicationContext()
         )
 
-        val pref = Mockito.mock(MyPreferenceManager::class.java)
+        val pref = mockk<MyPreferenceManager>()
         val loginFragment = launchFragmentInContainer<LoginFragment>()
 
         assertThat(navController.currentDestination?.id).isEqualTo(R.id.loginFragment)
