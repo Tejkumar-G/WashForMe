@@ -1,8 +1,11 @@
 package com.example.washforme.utils
 
 import android.content.res.ColorStateList
+import android.graphics.Color
 import android.util.Log
+import android.view.View
 import android.widget.ImageView
+import android.widget.TextView
 import androidx.annotation.ColorInt
 import androidx.core.widget.ImageViewCompat
 import androidx.databinding.BindingAdapter
@@ -70,4 +73,18 @@ fun ImageView.setImage(url: String?) {
 fun ImageView.setBackgroundTint(@ColorInt colorRes: Int?) {
     if (colorRes!=null)
         ImageViewCompat.setImageTintList(this, ColorStateList.valueOf(colorRes))
+}
+
+@BindingAdapter("setDisabled")
+fun setViewDisable(view: View, boolean: Boolean) {
+    when (view) {
+        is TextView -> {
+            view.isEnabled = boolean
+            view.setTextColor(if (boolean) Color.BLACK else Color.GRAY)
+        }
+        is ImageView -> {
+            view.setBackgroundTint(if(boolean) Color.BLUE else Color.GRAY)
+        }
+    }
+    view.setBackgroundColor(if (boolean) Color.WHITE else Color.LTGRAY)
 }

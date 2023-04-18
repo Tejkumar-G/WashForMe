@@ -1,5 +1,6 @@
 package com.example.washforme.viewModel
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -22,9 +23,15 @@ class SlotViewModel@Inject constructor(
 ): ViewModel() {
 
     val isLoading = MutableLiveData(false)
-    private val _pickUpSlots: MutableLiveData<PickUpSlots> = MutableLiveData()
-    val pickUpSlots: LiveData<PickUpSlots> = _pickUpSlots
+    private val _pickUpSlots: MutableLiveData<List<PickUpSlots>> = MutableLiveData()
+    val pickUpSlots: LiveData<List<PickUpSlots>> = _pickUpSlots
 
+    val isSameAddress : MutableLiveData<Boolean> = MutableLiveData(false)
+
+    fun sameAddressCheckStatusChanged(isChecked: Boolean) {
+        isSameAddress.value = isChecked
+        Log.d("isChecked", "sameAddressCheckStatusChanged: $isChecked")
+    }
     fun getPickUpSlots() {
         viewModelScope.launch(Dispatchers.Default) {
             repo.getPickUpSlots().onEach {

@@ -99,5 +99,5 @@ interface Api {
     @GET("/get_pick_up_time_slots/")
     suspend fun getPickUpSlots(
         @Header("Authorization") token: String
-    ): Response<PickUpSlots>
+    ): Response<List<PickUpSlots>>
 }
