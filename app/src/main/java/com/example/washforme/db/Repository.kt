@@ -302,7 +302,7 @@ class Repository @Inject constructor(
         }
     }
 
-    suspend fun getPickUpSlots(): Flow<ResponseData<PickUpSlots>> = flow {
+    suspend fun getPickUpSlots(): Flow<ResponseData<List<PickUpSlots>>> = flow {
         emit(ResponseData.loading(null))
         try {
             val response = api.getPickUpSlots("Token ${preferences.getString(Constants.TOKEN)}")
