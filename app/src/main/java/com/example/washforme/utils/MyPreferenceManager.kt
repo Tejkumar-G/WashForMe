@@ -49,8 +49,10 @@ class MyPreferenceManager @Inject constructor(private val sharedPref : SharedPre
             .apply()
     }
 
-    fun getUser(): User {
+    fun getUser(): User? {
         val stringUser = getString(Constants.USER)
+        if (stringUser=="")
+            return null
         return Gson().fromJson(stringUser, User::class.java)
     }
 

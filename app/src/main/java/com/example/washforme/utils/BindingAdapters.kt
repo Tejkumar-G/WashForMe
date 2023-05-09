@@ -7,51 +7,24 @@ import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.annotation.ColorInt
+import androidx.core.content.ContextCompat
 import androidx.core.widget.ImageViewCompat
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.washforme.R
-import com.example.washforme.adapter.*
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import java.text.SimpleDateFormat
+import java.util.*
 
-@BindingAdapter("categoryAdapter")
-fun adapter1(recyclerView: RecyclerView?, adapter: CategoryAdapter?) {
+@BindingAdapter("addAdapter")
+fun assAdapter(recyclerView: RecyclerView?, adapter: RecyclerView.Adapter<*>?) {
     Log.d("BindingAdapter", "RecyclerView: $recyclerView, Adapter: $adapter")
     if (recyclerView != null && adapter != null) {
         recyclerView.adapter = adapter
     }
 }
 
-@BindingAdapter("itemAdapter")
-fun adapter2(recyclerView: RecyclerView?, adapter: ItemAdapter?) {
-    Log.d("BindingAdapter", "RecyclerView: $recyclerView, Adapter: $adapter")
-    if (recyclerView != null && adapter != null) {
-        recyclerView.adapter = adapter
-    }
-}
-@BindingAdapter("cartAdapter")
-fun adapter3(recyclerView: RecyclerView?, adapter: CartCategoryAdapter?) {
-    Log.d("BindingAdapter", "RecyclerView: $recyclerView, Adapter: $adapter")
-    if (recyclerView != null && adapter != null) {
-        recyclerView.adapter = adapter
-    }
-}
-
-@BindingAdapter("cartItemAdapter")
-fun adapter4(recyclerView: RecyclerView?, adapter: CartItemAdapter?) {
-    Log.d("BindingAdapter", "RecyclerView: $recyclerView, Adapter: $adapter")
-    if (recyclerView != null && adapter != null) {
-        recyclerView.adapter = adapter
-    }
-}
-
-@BindingAdapter("addressAdapter")
-fun adapter5(recyclerView: RecyclerView?, adapter: AddressAdapter?) {
-    if (recyclerView !=null && adapter != null) {
-        recyclerView.adapter = adapter
-    }
-}
 
 @BindingAdapter("selectedItem")
 fun setSelectedItem(view: BottomNavigationView, itemId: Int?) {
@@ -83,8 +56,16 @@ fun setViewDisable(view: View, boolean: Boolean) {
             view.setTextColor(if (boolean) Color.BLACK else Color.GRAY)
         }
         is ImageView -> {
-            view.setBackgroundTint(if(boolean) Color.BLUE else Color.GRAY)
+            view.setBackgroundTint(if(boolean) ContextCompat.getColor(view.context, R.color.button_color) else Color.GRAY)
         }
     }
     view.setBackgroundColor(if (boolean) Color.WHITE else Color.LTGRAY)
+}
+
+@BindingAdapter("addTextInTimeFormat")
+fun TextView.addTextInTimeFormat(time: String) {
+    val inputFormat = SimpleDateFormat("HH:mm:ss", Locale.getDefault())
+    val outputFormat = SimpleDateFormat("h:mm a", Locale.getDefault())
+    val formattedTime = inputFormat.parse(time)?.let { outputFormat.format(it) }
+    this.text = formattedTime
 }

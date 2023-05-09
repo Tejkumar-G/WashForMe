@@ -43,6 +43,7 @@ class DashboardFragment(val viewModel: MainViewModel) : Fragment() {
             viewModel.checkForLatestCart()
         }
 
+
         viewModel.listOfCategories.observe(viewLifecycleOwner) {
             viewModel.categoryAdapter.addData(it)
             viewModel.updateItems(it?.get(0)?.id)
@@ -75,11 +76,11 @@ class DashboardFragment(val viewModel: MainViewModel) : Fragment() {
         }
 
 
-        viewModel.updateAddress(binding, viewModel.user.defaultAddress, true)
+        viewModel.updateAddress(binding, viewModel.user?.defaultAddress, true)
 
         getNavigationResult()?.observe(viewLifecycleOwner) {
             if (it == true) {
-                viewModel.updateAddress(binding, viewModel.user.defaultAddress, false)
+                viewModel.updateAddress(binding, viewModel.user?.defaultAddress, false)
             }
         }
     }

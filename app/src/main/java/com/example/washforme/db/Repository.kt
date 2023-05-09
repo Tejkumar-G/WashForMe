@@ -330,4 +330,33 @@ class Repository @Inject constructor(
             )
         }
     }
+
+    suspend fun getPickUpSlotsByDate(date: String): Flow<ResponseData<List<PickUpSlots>>> = flow {
+        emit(ResponseData.loading(null))
+        try {
+            val response = api.getPickUpSlotsByDate("Token ${preferences.getString(Constants.TOKEN)}", date)
+            if (response.isSuccessful) {
+                emit(ResponseData.success(response.body()))
+            }
+        } catch (e: HttpException) {
+            emit(
+                ResponseData.failure(
+                    msg = "Couldn't reach server, check your internet connection.",
+                    data = null
+                )
+            )
+        } catch (e: IOException) {
+            emit(
+                ResponseData.failure(
+                    msg = "Couldn't reach server, check your internet connection.",
+                    data = null
+                )
+            )
+        } catch (e: NullPointerException) {
+            ResponseData.failure(
+                msg = "Oops, something went wrong!",
+                data = null
+            )
+        }
+    }
 }

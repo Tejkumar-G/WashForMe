@@ -74,7 +74,7 @@
 
     <fragment
         android:id="@+id/pickUpSlotFragment"
-        android:name="com.example.washforme.view.PickUpSlotFragment">
+        android:name="com.example.washforme.view.SlotBookFragment">
 
     </fragment>
 

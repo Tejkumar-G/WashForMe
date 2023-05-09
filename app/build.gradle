@@ -25,7 +25,6 @@ android {
     buildTypes {
         debug {
             minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
         release {
             minifyEnabled false
@@ -35,10 +34,10 @@ android {
     flavorDimensions "default"
     productFlavors {
         LIVE {
-            buildConfigField 'String', 'BASE_URL', '"http://192.168.5.14:8000"'
+            buildConfigField 'String', 'BASE_URL', '"http://192.168.5.84:8000"'
         }
         DEV {
-            buildConfigField 'String', 'BASE_URL', '"http://192.168.5.14:8000"'
+            buildConfigField 'String', 'BASE_URL', '"http://192.168.5.84:8000"'
         }
     }
     compileOptions {
@@ -118,14 +117,7 @@ dependencies {
 
     implementation 'androidx.viewpager2:viewpager2:1.1.0-beta01'
 
-    androidTestImplementation 'androidx.test.ext:junit:1.1.5'
-    androidTestImplementation "androidx.test.espresso:espresso-core:3.5.1"
-    androidTestImplementation "io.mockk:mockk-android:1.11.0"
-    androidTestImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:1.5.0"
-    androidTestImplementation "io.insert-koin:koin-test-junit4:3.0.2"
-    androidTestImplementation "com.google.truth:truth:1.1.2"
-    debugImplementation "androidx.fragment:fragment-testing:1.5.5"
-    androidTestImplementation 'androidx.navigation:navigation-testing:2.5.3'
+
 
 
 }

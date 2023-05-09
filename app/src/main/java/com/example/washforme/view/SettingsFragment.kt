@@ -41,13 +41,13 @@ class SettingsFragment(val viewModel: MainViewModel) : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentSettingsBinding.inflate(LayoutInflater.from(context), container, false)
-        val settings = Gson().fromJson(viewModel.user.settings, Settings::class.java)
+        val settings = Gson().fromJson(viewModel.user?.settings, Settings::class.java)
         viewModel.darkMode.postValue(settings.darkMode != "Yes")
 
         binding.apply {
             this.lifecycleOwner = viewLifecycleOwner
             this.headerName = "Settings"
-            this.user = user
+            this.user = viewModel.user
             this.model = viewModel
             this.settings = settings
         }
@@ -56,7 +56,6 @@ class SettingsFragment(val viewModel: MainViewModel) : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
 
 
         viewModel.darkMode.observe(viewLifecycleOwner) {

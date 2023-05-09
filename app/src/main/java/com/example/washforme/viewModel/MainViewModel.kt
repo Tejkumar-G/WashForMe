@@ -336,8 +336,11 @@ class MainViewModel @Inject constructor(
         val userAddressFromPreference =
             Gson().fromJson(pref.getString(Constants.CURRENT_ADDRESS), UserAddress::class.java)
         if ((userAddress == null || userAddress.id != userAddressFromPreference.id) || initialAddress) {
-            user.defaultAddress = userAddressFromPreference
-            pref.setUser(user)
+            user?.defaultAddress = userAddressFromPreference
+            user?.let {
+                pref.setUser(it)
+            }
+
             binding.userAddress = userAddressFromPreference
             binding.executePendingBindings()
         }

@@ -100,4 +100,10 @@ interface Api {
     suspend fun getPickUpSlots(
         @Header("Authorization") token: String
     ): Response<List<PickUpSlots>>
+
+    @GET("/get_pick_up_slots/{date}/")
+    suspend fun getPickUpSlotsByDate(
+        @Header("Authorization") token: String,
+        @Path("date") date: String
+    ): Response<List<PickUpSlots>>
 }
