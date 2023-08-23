@@ -1,9 +1,10 @@
 package com.example.washforme.di
 
 import com.example.washforme.BuildConfig
-import com.example.washforme.db.Api
-import com.example.washforme.db.Repository
-import com.example.washforme.utils.MyPreferenceManager
+import com.example.washforme.core.data.dataSource.local.preferences.PrefConstants
+import com.example.washforme.core.data.dataSource.local.preferences.PreferenceManagerImpl
+import com.example.washforme.core.data.dataSource.remote.Api
+import com.example.washforme.core.data.dataSource.remote.Repository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -31,12 +32,23 @@ object RetrofitModule {
 
     @Singleton
     @Provides
-    fun okHttpClientProvider(preferenceManager: MyPreferenceManager): OkHttpClient =
+    fun okHttpClientProvider(preferenceManager: PreferenceManagerImpl): OkHttpClient =
         OkHttpClient.Builder()
             .connectTimeout(2, TimeUnit.MINUTES)
             .writeTimeout(2, TimeUnit.MINUTES)
             .readTimeout(2, TimeUnit.MINUTES)
             .addInterceptor(HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY))
+            .addInterceptor { chain ->
+                chain.proceed(chain.request().newBuilder().also {
+                    preferenceManager.getString(PrefConstants.TOKEN)?.let { token ->
+                        it.addHeader(
+                            "Authorization",
+                            "Bearer $token"
+                        )
+                        it.header("Connection", "close")
+                    }
+                }.build())
+            }
             .retryOnConnectionFailure(true)
             .build()
 
@@ -48,6 +60,7 @@ object RetrofitModule {
 
     @Singleton
     @Provides
-    fun repoProvider(api: Api, preferenceManager: MyPreferenceManager) = Repository(api, preferenceManager)
+    fun repoProvider(api: Api, preferenceManager: PreferenceManagerImpl) =
+        Repository(api, preferenceManager)
 }
 

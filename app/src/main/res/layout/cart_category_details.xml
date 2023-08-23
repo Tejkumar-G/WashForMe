@@ -6,12 +6,14 @@
     <data>
         <variable
             name="category"
-            type="com.example.washforme.model.Category" />
+            type="com.example.washforme.core.domain.model.WashCategoryResponseModelItem" />
+
         <variable
             name="showListOfItems"
             type="Boolean" />
 
     </data>
+
     <androidx.cardview.widget.CardView
         android:id="@+id/card"
         android:layout_width="match_parent"
@@ -23,9 +25,11 @@
         android:layout_marginStart="10dp"
         android:layout_marginEnd="10dp"
         app:cardBackgroundColor="@color/light_background_blue">
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
+
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/topLayout"
             android:layout_width="match_parent"
@@ -43,7 +47,7 @@
                 android:layout_marginStart="10dp"
                 android:textColor="@color/black"
                 style="@style/BoldText"
-                android:text="@={category.name}" />
+                android:text="@{category.name}" />
 
             <View
                 android:id="@+id/categoryCountBackground"

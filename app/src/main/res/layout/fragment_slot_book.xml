@@ -6,35 +6,27 @@
     <data>
         <variable
             name="model"
-            type="com.example.washforme.viewModel.SlotViewModel" />
+            type="com.example.washforme.featureBooking.presentation.SlotViewModel" />
 
+        <variable
+            name="header"
+            type="com.example.washforme.core.domain.model.ToolbarModel" />
+
+        <import type="android.view.View" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".view.SlotBookFragment">
+        tools:context=".featureBooking.presentation.SlotBookFragment">
 
         <include
-            android:id="@+id/topLayout"
+            android:id="@+id/toolbarLayout"
             layout="@layout/header_layout"
+            app:header="@{header}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
-
-
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/lato_regular"
-            android:text="Book Your Slot"
-            android:textColor="@color/black"
-            android:textSize="16sp"
-            app:layout_constraintBottom_toBottomOf="@id/topLayout"
-            app:layout_constraintEnd_toEndOf="@id/topLayout"
-            app:layout_constraintStart_toStartOf="@id/topLayout"
-            app:layout_constraintTop_toTopOf="@id/topLayout" />
 
         <ScrollView
             android:layout_width="match_parent"
@@ -45,7 +37,7 @@
             app:layout_constraintBottom_toTopOf="@id/btnContinue"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/topLayout">
+            app:layout_constraintTop_toBottomOf="@id/toolbarLayout">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
@@ -57,7 +49,7 @@
                     style="@style/BoldText"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Address"
+                    android:text="@string/address"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
@@ -143,7 +135,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:checked="@={model.isSameAddress}"
-                        android:onCheckedChanged="@{(v, check) -> model.sameAddressCheckStatusChanged(check)}"
+                        onCheckChangeListener="@{model.isSameAddress}"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
@@ -151,7 +143,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Same as Delivery Address"
+                        android:text="@string/same_as_delivery_address"
                         android:textColor="@color/black"
                         android:textSize="14sp"
                         app:layout_constraintBottom_toBottomOf="@id/checkSameAddress"
@@ -233,7 +225,7 @@
                         android:background="@color/primary_white"
                         android:paddingHorizontal="10dp"
                         setDisabled="@{!model.isSameAddress()}"
-                        android:text="Delivery Address"
+                        android:text="@string/delivery_address"
                         android:textColor="@color/button_color"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
@@ -261,6 +253,7 @@
                         app:layout_constraintTop_toTopOf="parent"
                         app:layout_constraintVertical_bias="1.0">
 
+<!--                        addAdapter="@{slotsDateAdapter}"-->
                         <androidx.recyclerview.widget.RecyclerView
                             android:id="@+id/pickDateRecycler"
                             android:layout_width="match_parent"
@@ -270,16 +263,15 @@
                             app:layout_constraintTop_toTopOf="parent"
                             tools:itemCount="2"
                             android:orientation="horizontal"
-                            addAdapter="@{model.slotDateAdapter}"
                             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                             tools:listitem="@layout/slot_date_item" />
 
+<!--                        addAdapter="@{slotsTimeAdapter}"-->
                         <androidx.recyclerview.widget.RecyclerView
                             android:id="@+id/pickTimeRecycler"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:scrollbars="none"
-                            addAdapter="@{model.slotTimeAdapter}"
                             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toBottomOf="@id/pickDateRecycler"
@@ -292,7 +284,7 @@
                         android:layout_marginStart="15dp"
                         android:background="@color/primary_white"
                         android:paddingHorizontal="10dp"
-                        android:text="PickUp Slot"
+                        android:text="@string/pickup_slot"
                         android:textColor="@color/button_color"
                         android:textStyle="bold"
                         app:layout_constraintStart_toStartOf="parent"
@@ -364,7 +356,7 @@
             android:layout_marginBottom="15dp"
             android:background="@drawable/button_curve"
             android:paddingVertical="10dp"
-            android:text="Continue"
+            android:text="@string/btnContinue"
             android:textAlignment="center"
             android:textColor="@color/primary_white"
             android:textSize="16sp"
@@ -372,6 +364,15 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
+
+        <ProgressBar
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:visibility="@{model.isLoading()? View.VISIBLE: View.GONE}"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

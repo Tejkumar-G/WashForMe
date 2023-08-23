@@ -4,8 +4,8 @@
 
     <data>
         <variable
-            name="category"
-            type="com.example.washforme.model.Category" />
+            name="categoryName"
+            type="String" />
 
     </data>
 
@@ -29,7 +29,7 @@
             android:padding="5dp"
             android:paddingStart="20dp"
             android:paddingEnd="20dp"
-            android:text="@={category.name}"
+            android:text="@{categoryName}"
             android:textColor="#455A64"
             android:textSize="14sp"
             android:fontFamily="@font/lato_regular"

@@ -35,4 +35,8 @@ output.json
 #NDK
 obj/
 .externalNativeBuild
+/.idea/workspace.xml
+/.idea/navEditor.xml
+/.idea/gradle.xml
+/.idea/deploymentTargetDropDown.xml
 

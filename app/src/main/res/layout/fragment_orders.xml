@@ -4,20 +4,21 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
+
         <variable
-            name="headerName"
-            type="String" />
+            name="header"
+            type="com.example.washforme.core.domain.model.ToolbarModel" />
 
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".view.OrdersFragment">
+        tools:context=".featureOrder.presentation.OrdersFragment">
 
         <include app:layout_constraintTop_toTopOf="parent"
             android:id="@+id/topLayout"
-            app:headerName="@{headerName}"
+            header="@{header}"
             layout="@layout/header_layout"/>
 
 

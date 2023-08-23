@@ -13,6 +13,8 @@
     <color name="text_color">#253238</color>
     <color name="button_color">#0074D9</color>
 
+    <color name="blue">#8FC4FF</color>
+
     <color name="light_pink">#FFE4E4</color>
     <color name="light_purple">#F0E2FC</color>
     <color name="light_orange">#FFDCBB</color>

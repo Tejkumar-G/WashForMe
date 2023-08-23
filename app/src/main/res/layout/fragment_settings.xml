@@ -6,30 +6,29 @@
     <data>
 
         <variable
-            name="headerName"
-            type="String" />
+            name="header"
+            type="com.example.washforme.core.domain.model.ToolbarModel" />
 
         <variable
             name="user"
-            type="com.example.washforme.model.User" />
+            type="com.example.washforme.featureAuth.domain.models.User" />
         <variable
             name="settings"
-            type="com.example.washforme.model.Settings" />
+            type="com.example.washforme.core.domain.model.Settings" />
         <variable
             name="model"
-            type="com.example.washforme.viewModel.MainViewModel" />
+            type="com.example.washforme.core.presentation.main.MainViewModel" />
 
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:context=".view.SettingsFragment">
+        android:layout_height="match_parent">
 
         <include
             android:id="@+id/topLayout"
             layout="@layout/header_layout"
-            app:headerName="@{headerName}"
+            header="@{header}"
             app:layout_constraintTop_toTopOf="parent" />
 
         <androidx.cardview.widget.CardView
@@ -238,7 +237,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="10dp"
                         android:fontFamily="@font/lato_regular"
-                        android:text="@={user.phone}"
+                        android:text="@{user.phone}"
                         android:textColor="@color/dark_background"
                         app:layout_constraintBottom_toBottomOf="@id/phoneImage"
                         app:layout_constraintEnd_toStartOf="@id/phoneNextButton"

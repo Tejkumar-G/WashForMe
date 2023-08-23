@@ -6,22 +6,30 @@
     <data>
         <variable
             name="model"
-            type="com.example.washforme.viewModel.AddressViewModel" />
+            type="com.example.washforme.core.presentation.address.AddressViewModel" />
 
+        <variable
+            name="header"
+            type="com.example.washforme.core.domain.model.ToolbarModel" />
+
+
+        <import type="android.view.View" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".view.AddressFragment">
+        tools:context=".core.presentation.address.AddressFragment">
+
         <include layout="@layout/header_layout"
-            android:id="@+id/topLayout"/>
+            android:id="@+id/topLayout"
+            app:header="@{header}"/>
 
         <Button
             android:id="@+id/addAddress"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Add address"
+            android:text="@string/add_address"
             style="@style/ButtonStyle"
             android:layout_marginTop="10dp"
             android:layout_marginHorizontal="10dp"
@@ -36,6 +44,17 @@
             app:addAdapter="@{model.addressAdapter}"
             android:paddingBottom="10dp"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
+
+
+
+        <ProgressBar
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:visibility="@{model.isLoading() ? View.VISIBLE: View.GONE}"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

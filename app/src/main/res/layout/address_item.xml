@@ -5,7 +5,7 @@
     <data>
         <variable
             name="userAddress"
-            type="com.example.washforme.model.UserAddress" />
+            type="com.example.washforme.core.domain.model.UserAddress" />
         <variable
             name="isAddressSelected"
             type="Boolean" />

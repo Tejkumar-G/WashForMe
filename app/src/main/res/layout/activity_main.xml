@@ -5,7 +5,7 @@
     <data>
         <variable
             name="model"
-            type="com.example.washforme.viewModel.MainViewModel" />
+            type="com.example.washforme.core.presentation.main.MainViewModel" />
 
     </data>
 

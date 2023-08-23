@@ -1,8 +1,10 @@
 package com.example.washforme.di
+
 import android.content.Context
 import android.content.SharedPreferences
-import com.example.washforme.utils.Constants
-import com.example.washforme.utils.MyPreferenceManager
+import com.example.washforme.core.data.dataSource.local.preferences.PrefConstants
+import com.example.washforme.core.data.dataSource.local.preferences.PreferenceManagerImpl
+import com.example.washforme.core.domain.preferences.PreferenceManager
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -18,11 +20,11 @@ object PreferenceModule {
     @Provides
     fun provideSharedPreferences(@ApplicationContext context: Context): SharedPreferences =
         context.getSharedPreferences(
-            Constants.PREFERENCE_NAME, Context.MODE_PRIVATE
+            PrefConstants.PREFERENCE_NAME, Context.MODE_PRIVATE
         )
 
     @Singleton
     @Provides
-    fun provideSessionManager(preferences: SharedPreferences): MyPreferenceManager =
-        MyPreferenceManager(preferences)
+    fun provideSessionManager(preferences: SharedPreferences): PreferenceManager =
+        PreferenceManagerImpl(preferences)
 }

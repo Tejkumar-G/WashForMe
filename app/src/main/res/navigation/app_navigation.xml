@@ -2,69 +2,74 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/app_navigation"
-    app:startDestination="@+id/loginFragment">
+    app:startDestination="@+id/mainFragment">
 
-    <fragment
-        android:id="@+id/loginFragment"
-        android:name="com.example.washforme.view.LoginFragment">
+    <fragment android:id="@+id/authFragment"
+        android:name="com.example.washforme.featureAuth.presentation.AuthFragment">
+
+    </fragment>
+
+    <fragment android:id="@+id/loginFragment"
+        android:name="com.example.washforme.featureAuth.presentation.login.LoginFragment">
 
         <action
             android:id="@+id/loginToOtpFragment"
             app:destination="@id/otpFragment" />
+
         <action
             android:id="@+id/loginToMainFragment"
             app:destination="@id/mainFragment" />
     </fragment>
 
-    <fragment
-        android:id="@+id/mainFragment"
-        android:name="com.example.washforme.view.MainFragment">
+    <fragment android:id="@+id/otpFragment"
+        android:name="com.example.washforme.featureAuth.presentation.otp.OtpFragment">
+
+        <action
+            android:id="@+id/otpFragmentToMainFragment"
+            app:destination="@+id/mainFragment" />
+    </fragment>
+
+    <fragment android:id="@+id/mainFragment"
+        android:name="com.example.washforme.core.presentation.main.MainFragment">
+
         <action
             android:id="@+id/action_mainFragment_to_addressFragment"
             app:destination="@id/addressFragment" />
+
+        <action
+            android:id="@+id/mainToLoginFragment"
+            app:destination="@id/loginFragment" />
+
         <action
             android:id="@+id/action_mainFragment_to_pickUpSlotFragment"
             app:destination="@id/pickUpSlotFragment" />
     </fragment>
 
-
-
-    <fragment
-        android:id="@+id/otpFragment"
-        android:name="com.example.washforme.view.OtpFragment" >
-
-        <action
-            android:id="@+id/otpFragmentToDashboardFragment"
-            app:destination="@+id/dashboardFragment"/>
-    </fragment>
-
-    <fragment
-        android:id="@+id/dashboardFragment"
-        android:name="com.example.washforme.view.DashboardFragment" >
+    <fragment android:id="@+id/dashboardFragment"
+        android:name="com.example.washforme.core.presentation.dashboard.DashboardFragment">
         <action
             android:id="@+id/dashboardToLoginFragment"
-            app:destination="@+id/loginFragment"/>
+            app:destination="@+id/loginFragment" />
         <action
             android:id="@+id/action_dashboardFragment_to_cartFragment"
             app:destination="@id/cartFragment" />
 
     </fragment>
-    <fragment
-        android:id="@+id/addressFragment"
-        android:name="com.example.washforme.view.AddressFragment">
+
+    <fragment android:id="@+id/addressFragment"
+        android:name="com.example.washforme.core.presentation.address.AddressFragment">
         <action
             android:id="@+id/action_addressFragment_to_editAddressFragment"
-            app:destination="@id/editAddressFragment"/>
+            app:destination="@id/editAddressFragment" />
     </fragment>
 
-    <fragment
-        android:id="@+id/editAddressFragment"
-        android:name="com.example.washforme.view.EditAddressFragment">
+    <fragment android:id="@+id/editAddressFragment"
+        android:name="com.example.washforme.core.presentation.editAddress.EditAddressFragment">
 
     </fragment>
-    <fragment
-        android:id="@+id/cartFragment"
-        android:name="com.example.washforme.view.CartFragment">
+
+    <fragment android:id="@+id/cartFragment"
+        android:name="com.example.washforme.featureCart.presentation.CartFragment">
 
         <action
             android:id="@+id/action_cartFragment_to_dashboardFragment"
@@ -72,9 +77,8 @@
 
     </fragment>
 
-    <fragment
-        android:id="@+id/pickUpSlotFragment"
-        android:name="com.example.washforme.view.SlotBookFragment">
+    <fragment android:id="@+id/pickUpSlotFragment"
+        android:name="com.example.washforme.featureBooking.presentation.SlotBookFragment">
 
     </fragment>
 

@@ -20,7 +20,7 @@
         android:uiOptions="none"
         tools:targetApi="33">
         <activity
-            android:name=".view.MainActivity"
+            android:name=".core.presentation.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

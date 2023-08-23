@@ -5,10 +5,10 @@
     <data>
         <variable
             name="item"
-            type="com.example.washforme.model.WashItem" />
+            type="com.example.washforme.core.domain.model.WashItemResponseModelItem" />
         <variable
             name="model"
-            type="com.example.washforme.viewModel.MainViewModel" />
+            type="com.example.washforme.core.presentation.main.MainViewModel" />
 
     </data>
 
@@ -47,7 +47,7 @@
                 android:layout_marginStart="10dp"
                 android:textColor="@color/black"
                 android:fontFamily="@font/lato_regular"
-                android:text="@={item.name}" />
+                android:text="@{item.name}" />
 
             <TextView
                 android:id="@+id/itemPriceSymbol"
@@ -69,7 +69,7 @@
                 android:layout_marginStart="2dp"
                 android:textColor="@color/black"
                 android:fontFamily="@font/lato_semibold"
-                android:text='@={item.price+""}' />
+                android:text='@={item.price}' />
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

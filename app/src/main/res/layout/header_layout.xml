@@ -4,10 +4,11 @@
 
     <data>
 
+        <import type="android.view.View" />
 
         <variable
-            name="headerName"
-            type="String" />
+            name="header"
+            type="com.example.washforme.core.domain.model.ToolbarModel" />
 
     </data>
 
@@ -39,7 +40,7 @@
 
         <ImageView
             android:id="@+id/backButton"
-            android:visibility="gone"
+            android:visibility="@{header.canShowBackBtn ? View.VISIBLE: View.GONE}"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="15dp"
@@ -53,7 +54,8 @@
             android:layout_height="wrap_content"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
-            android:text="@={headerName}"
+            android:visibility="@{header.title == null ? View.GONE: View.VISIBLE}"
+            android:text="@={header.title}"
             android:textColor="@color/black"
             android:fontFamily="@font/lato_bold"
             app:layout_constraintEnd_toEndOf="parent"

@@ -3,10 +3,10 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
-        <import type="com.example.washforme.viewModel.MainViewModel"/>
+        <import type="com.example.washforme.core.presentation.main.MainViewModel"/>
         <variable
             name="model"
-            type="com.example.washforme.viewModel.MainViewModel" />
+            type="com.example.washforme.core.presentation.main.MainViewModel" />
 
     </data>
 
@@ -23,7 +23,6 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            android:setOnItemSelectedListener="@{(item) -> model.onSelectedBottomNavigation(item)}"
             app:menu="@menu/bottom_navigation_menu" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

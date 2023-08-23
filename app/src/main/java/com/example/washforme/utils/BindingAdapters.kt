@@ -2,8 +2,12 @@ package com.example.washforme.utils
 
 import android.content.res.ColorStateList
 import android.graphics.Color
+import android.text.SpannableString
+import android.text.style.UnderlineSpan
 import android.util.Log
 import android.view.View
+import android.widget.CheckBox
+import android.widget.EditText
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.annotation.ColorInt
@@ -14,6 +18,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.washforme.R
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.update
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -53,13 +59,17 @@ fun setViewDisable(view: View, boolean: Boolean) {
     when (view) {
         is TextView -> {
             view.isEnabled = boolean
-            view.setTextColor(if (boolean) Color.BLACK else Color.GRAY)
+            view.setTextColor(if (boolean) ContextCompat.getColor(view.context, R.color.button_color) else Color.GRAY)
         }
         is ImageView -> {
             view.setBackgroundTint(if(boolean) ContextCompat.getColor(view.context, R.color.button_color) else Color.GRAY)
         }
+        is EditText -> {
+            view.setTextColor(if (boolean) Color.BLACK else Color.GRAY)
+        }
     }
-    view.setBackgroundColor(if (boolean) Color.WHITE else Color.LTGRAY)
+//    view.backgroundTintList = (if (boolean) ContextCompat.getColorStateList(view.context, R.color.primary_white) else
+//        ContextCompat.getColorStateList(view.context, R.color.black))
 }
 
 @BindingAdapter("addTextInTimeFormat")
@@ -68,4 +78,25 @@ fun TextView.addTextInTimeFormat(time: String) {
     val outputFormat = SimpleDateFormat("h:mm a", Locale.getDefault())
     val formattedTime = inputFormat.parse(time)?.let { outputFormat.format(it) }
     this.text = formattedTime
+}
+
+@BindingAdapter("onCheckChangeListener")
+fun CheckBox.onCheckChangeListener(isChecked: MutableStateFlow<Boolean>) {
+    setOnCheckedChangeListener { _, check ->
+        isChecked.update { check }
+        setChecked(check)
+    }
+}
+
+@BindingAdapter("underlinedText")
+fun TextView.underlinedText(text: String) {
+    val mSpannableString = SpannableString(text)
+    mSpannableString.setSpan(UnderlineSpan(), 0, mSpannableString.length, 0)
+    this.text = mSpannableString
+}
+
+@BindingAdapter("setOtp", "otpIndex")
+fun EditText.setOtpWithIndex(otp: String, index: Int) {
+    if(otp.length <= index) return
+    setText(otp[index].toString())
 }

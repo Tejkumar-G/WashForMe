@@ -6,7 +6,7 @@
         <import type="android.view.View"/>
         <variable
             name="timeSlot"
-            type="com.example.washforme.model.PickUpSlots" />
+            type="com.example.washforme.featureBooking.domain.models.Timeslot" />
 
     </data>
 
@@ -33,7 +33,7 @@
             <TextView
                 android:id="@+id/txtStartTime"
                 style="@style/RegularText"
-                addTextInTimeFormat="@{timeSlot.startTime}"
+                addTextInTimeFormat="@{timeSlot.start_datetime}"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="16sp"
@@ -54,7 +54,7 @@
 
             <TextView
                 style="@style/RegularText"
-                addTextInTimeFormat="@{timeSlot.endTime}"
+                addTextInTimeFormat="@{timeSlot.end_datetime}"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="16sp"
@@ -70,7 +70,7 @@
                 android:text="Slot Full"
                 android:textColor="@color/dark_background"
                 android:textSize="16sp"
-                android:visibility="@{timeSlot.available?View.GONE:View.VISIBLE}"
+                android:visibility="@{true?View.GONE:View.VISIBLE}"
                 app:layout_constraintBottom_toBottomOf="@id/checkSlot"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="@id/checkSlot" />

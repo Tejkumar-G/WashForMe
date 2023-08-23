@@ -7,11 +7,16 @@
         <import type="android.view.View"/>
         <variable
             name="userAddress"
-            type="com.example.washforme.model.UserAddress" />
+            type="com.example.washforme.core.domain.model.UserAddress" />
+
+
+        <variable
+            name="header"
+            type="com.example.washforme.core.domain.model.ToolbarModel" />
 
         <variable
             name="model"
-            type="com.example.washforme.viewModel.AddressViewModel" />
+            type="com.example.washforme.core.presentation.address.AddressViewModel" />
 
     </data>
 
@@ -21,7 +26,8 @@
 
         <include
             android:id="@+id/topLayout"
-            layout="@layout/header_layout" />
+            layout="@layout/header_layout"
+            header="@{header}"/>
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"

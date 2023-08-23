@@ -7,14 +7,14 @@
 
         <variable
             name="model"
-            type="com.example.washforme.viewModel.MainViewModel" />
+            type="com.example.washforme.core.presentation.main.CoreViewModel" />
 
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".view.MainFragment">
+        tools:context=".core.presentation.main.MainFragment">
 
         <androidx.viewpager2.widget.ViewPager2
             android:id="@+id/viewPager"
@@ -32,7 +32,6 @@
 
             <include
                 android:id="@+id/bottom_include"
-                app:model="@{model}"
                 layout="@layout/bottom_navigation_layout"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent" />

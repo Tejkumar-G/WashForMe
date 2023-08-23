@@ -5,21 +5,22 @@
     <data>
         <variable
             name="model"
-            type="com.example.washforme.viewModel.MainViewModel" />
+            type="com.example.washforme.core.presentation.main.CoreViewModel" />
+
         <variable
-            name="headerName"
-            type="String" />
+            name="header"
+            type="com.example.washforme.core.domain.model.ToolbarModel" />
     </data>
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:background="@color/secondary_white"
         android:layout_height="match_parent"
-        tools:context=".view.CartFragment">
+        tools:context=".featureCart.presentation.CartFragment">
 
         <include
             android:id="@+id/header_layout"
             layout="@layout/header_layout"
-            app:headerName="@{headerName}"
+            header="@{header}"
             app:layout_constraintTop_toTopOf="parent"/>
 
         <TextView
@@ -30,10 +31,10 @@
             app:layout_constraintTop_toBottomOf="@id/header_layout"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintBottom_toTopOf="@id/addressLineTwo"
-            android:text='@{model.user.defaultAddress.address.addressLineOne+", "+ model.user.defaultAddress.address.addressLineTwo}'
             style="@style/RegularText"
             android:layout_marginStart="20dp"
             android:layout_marginTop="10dp"/>
+        <!--            android:text='@{model.user.defaultAddress.address.addressLineOne+", "+ model.user.defaultAddress.address.addressLineTwo}'-->
         <TextView
             android:visibility="gone"
             android:id="@+id/addressLineTwo"
@@ -41,10 +42,10 @@
             android:layout_height="wrap_content"
             app:layout_constraintTop_toBottomOf="@id/addressLineOne"
             app:layout_constraintStart_toStartOf="@id/addressLineOne"
-            android:text='@{model.user.defaultAddress.address.city+", "+model.user.defaultAddress.address.country+", "+model.user.defaultAddress.address.postcode}'
             style="@style/RegularText"
             android:layout_marginStart="20dp"
             android:layout_marginTop="10dp"/>
+<!--        android:text='@{model.user.defaultAddress.address.city+", "+model.user.defaultAddress.address.country+", "+model.user.defaultAddress.address.postcode}'-->
 
         <ImageView
             android:visibility="gone"
@@ -70,12 +71,13 @@
                 android:layout_height="match_parent">
 
 
+                <!--                    addAdapter="@{model.cartAdapter}"-->
                 <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/cartRecycler"
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    addAdapter="@{model.cartAdapter}"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                     android:layout_marginTop="5dp"
                     android:layout_marginBottom="10dp"
@@ -98,7 +100,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="50dp"
                 style="@style/EditTextStyle"
-                android:text='@{model.noOfItems+" Items"+" | $"+model.totalPrice}'
+                android:text='@{model.noOfItems + " Items"+" | $"+model.totalPrice}'
                 android:padding="10dp"
                 android:gravity="center"
                 app:layout_constraintStart_toStartOf="parent"
@@ -107,6 +109,7 @@
                 android:layout_marginStart="20dp"
                 android:layout_marginVertical="20dp"/>
 
+            <!--                android:onClick="@{() -> model.openSlotBook()}"-->
             <Button
                 android:id="@+id/pickUpButton"
                 android:layout_width="0dp"
@@ -115,7 +118,6 @@
                 android:layout_marginEnd="20dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 style="@style/FullCurveButtonStyle"
-                android:onClick="@{() -> model.openSlotBook()}"
                 app:layout_constraintStart_toEndOf="@id/itemsCountAndPrice"
                 android:text="Book Pick-UP Slot"
                 app:layout_constraintTop_toTopOf="@id/itemsCountAndPrice"
